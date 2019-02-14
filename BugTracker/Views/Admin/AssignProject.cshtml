@@ -1,0 +1,73 @@
+﻿
+@{
+
+    ViewBag.Title = "AssignProject";
+}
+
+
+
+
+<br />
+<!-- partial -->
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h2>Assign/Unassign Projects</h2>
+                    <hr />
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <b> @Html.Label("Choose a Project", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <div class="col-md-12">
+                            @Html.DropDownList("Project", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <b>@Html.Label("Assign a Project Manager", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <div class="col-md-12">
+                            @Html.DropDownList("ProjectManager", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <b> @Html.Label("Assign a Developer(s)", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <div class="col-md-12">
+                            @Html.ListBox("Developers", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <b> @Html.Label("Assign a Submitter(s)", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <div class="col-md-12">
+                            @Html.ListBox("Submitters", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-12">
+                            <input type="submit" value="Assign" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    <div>
+                        @Html.ActionLink("Back to Home", "Index", "Home")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+<br />
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+}

@@ -1,0 +1,63 @@
+﻿
+
+@{
+
+
+    ViewBag.Title = "Assign Role";
+}
+
+
+
+
+<br />
+<!-- partial -->
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    
+                        <h2>Assign/Unassign Roles</h2>
+                        <hr />
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Choose User", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("Users", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Choose Role", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12 " >
+                                @Html.DropDownList("Roles", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-12">
+                                <input type="submit" value="Assign" class="btn btn-primary" />
+                            </div>
+                        </div>
+                        <div>
+                            @Html.ActionLink("Back to Home", "Index", "Home")
+                        </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<br />
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+}

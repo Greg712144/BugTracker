@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BugTracker.Models.Project>
+
+@{
+    ViewBag.Title = "ticketIndex";
+}
+
+<br />
+
+<div class="row">
+    @if (Request.IsAuthenticated)
+    {
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">All Tickets</h5>
+                    <a href="@Url.Action("Index", "Tickets")" class="btn btn-lg btn-inverse-primary">View All Tickets</a>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">My Tickets</h5>
+                    <a href="@Url.Action("myTickets", "Tickets")" class="btn btn-lg btn-inverse-primary">View My Tickets</a>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+
+</div>
+
+
+<br />
+
+<div class="row">
+    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+    {
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Ticket Editing</h5>
+                    <a href="@Url.Action("EtIndex","Tickets")" class="btn btn-lg btn-inverse-primary">Edit Your Ticket(s)</a>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+}

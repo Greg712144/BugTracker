@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BugTracker.Models.Ticket>
+
+@using BugTracker.Helpers
+
+@{
+
+    ViewBag.Title = "AssignedT";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-body">
+
+                <h2>Assigned Tickets</h2><p>@Html.ActionLink("Back to List", "Index")</p>
+                <hr />
+
+                <div class="table-responsive">
+                    <table id=" tickTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    @Html.Label("Project Manager")
+                                </th>
+                                <th>
+                                    @Html.Label("Developer(s)")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AssignedToUserTwo.FirstName)
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+
+    <script src="~/Scripts/dataTables/jquery.dataTables.min.js"></script>
+
+    <script src="~/Scripts/dataTables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $('#tickTable').dataTable();
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
