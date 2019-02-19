@@ -40,11 +40,6 @@ namespace BugTracker.Controllers
             return View(tickets);
         }
 
-        public ActionResult ticketIndex()
-        {
-
-            return View();
-        }
 
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
@@ -136,7 +131,7 @@ namespace BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ProjectId,TicketTypeId,TicketStatusId,TicketPriorityId,OwnerUserId,AssignedToUserId,AssignedToUserTwoId,Title,Description,Created,Updated")] Ticket ticket)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ProjectId,TicketTypeId,TicketStatusId,TicketPriorityId,OwnerUserId,AssignedToUserId,AssignedToUserTwoId,Title,Description,Created,Updated")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +143,7 @@ namespace BugTracker.Controllers
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
 
-                notificationHelper.Notify(oldTicket, ticket);
+                await notificationHelper.Notify(oldTicket, ticket);
                 historyHelper.AddHistory(oldTicket, ticket);
 
                 return RedirectToAction("Index");

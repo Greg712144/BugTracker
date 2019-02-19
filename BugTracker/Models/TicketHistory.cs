@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BugTracker.Models
 {
@@ -11,7 +12,7 @@ namespace BugTracker.Models
 
         public int TicketId { get; set; }
         public string UserId { get; set; }
-
+        [AllowHtml]
         public string PropertyName { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }

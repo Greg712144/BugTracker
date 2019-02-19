@@ -65,7 +65,7 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult AssignProject()
         {
-            var Pm = roleHelper.UsersInRole("ProjectManager");
+            var Pm = roleHelper.UsersInRole("Project Manager");
             ViewBag.ProjectManager = new SelectList(Pm, "Id", "Email");
 
             var Dev = roleHelper.UsersInRole("Developer");
@@ -121,14 +121,14 @@ namespace BugTracker.Controllers
         }
 
         //Get
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult AssignTicket()
         {
-            var PmId = roleHelper.UsersInRole("ProjectManager");
+            var PmId = roleHelper.UsersInRole("Project Manager");
             ViewBag.ProjectManager = new SelectList(PmId, "Id", "FirstName");
 
             var DevId = roleHelper.UsersInRole("Developer");
-            ViewBag.Developer = new SelectList(DevId, "Id", "FirstName");
+            ViewBag.Developers = new SelectList(DevId, "Id", "FirstName");
 
             //I want to load a Viewbag that holds each of the Projects in the system
             ViewBag.Ticket = new SelectList(db.Tickets, "Id", "Title");

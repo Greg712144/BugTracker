@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTracker.Models;
 using System.Net.Mail;
+using System.Web.Configuration;
 
 namespace BugTracker.Controllers
 {
@@ -67,21 +68,53 @@ namespace BugTracker.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, string demoEmail)
         {
-            if (!ModelState.IsValid)
-            {
-                return View (model);
+            SignInStatus result;
 
-                
+            if(string.IsNullOrEmpty(demoEmail))
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            }
+            else
+            {
+                result = await SignInManager.PasswordSignInAsync(demoEmail, WebConfigurationManager.AppSettings["DemoPassword"],model.RememberMe, shouldLockout: false);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
+
+
                 case SignInStatus.Success:
+
+                    if(string.IsNullOrEmpty(returnUrl))
+                    {
+                        if(demoEmail == "DemoAdmin@mailinator.com")
+                        {
+                            return RedirectToAction("AdminDash","Users");
+                        }
+                        else if(demoEmail == "DemoPM@mailinator.com")
+                        {
+                            return RedirectToAction("_PmDash","Users");
+                        }
+                        else if (demoEmail == "DemoDev@mailinator.com")
+                        {
+                            return RedirectToAction("_DevDash", "Users");
+                        }
+                        else if (demoEmail == "DemoSub@mailinator.com")
+                        {
+                            return RedirectToAction("_SubDash", "Users");
+                        }
+                        else
+
+                        return RedirectToAction("Index", "Home");
+                    }
+
                     return RedirectToLocal(returnUrl); 
                 case SignInStatus.LockedOut:
                     return View("Lockout");

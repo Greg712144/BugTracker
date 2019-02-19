@@ -118,7 +118,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            var DevId = userManager.FindByEmail("Dev@outlook.com").Id;
+            userId = userManager.FindByEmail("Dev@outlook.com").Id;
             userManager.AddToRole(userId, "Developer");
 
 
@@ -137,7 +137,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            DevId = userManager.FindByEmail("Dev2@outlook.com").Id;
+            userId = userManager.FindByEmail("Dev2@outlook.com").Id;
             userManager.AddToRole(userId, "Developer");
 
 
@@ -156,7 +156,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            DevId = userManager.FindByEmail("Dev3@outlook.com").Id;
+            userId = userManager.FindByEmail("Dev3@outlook.com").Id;
             userManager.AddToRole(userId, "Developer");
 
 
@@ -176,7 +176,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            var PmId = userManager.FindByEmail("PM@outlook.com").Id;
+            userId = userManager.FindByEmail("PM@outlook.com").Id;
             userManager.AddToRole(userId, "Project Manager");
 
 
@@ -196,7 +196,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            PmId = userManager.FindByEmail("PM2@outlook.com").Id;
+            userId = userManager.FindByEmail("PM2@outlook.com").Id;
             userManager.AddToRole(userId, "Project Manager");
 
 
@@ -215,7 +215,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            PmId = userManager.FindByEmail("PM3@outlook.com").Id;
+            userId = userManager.FindByEmail("PM3@outlook.com").Id;
             userManager.AddToRole(userId, "Project Manager");
 
 
@@ -234,7 +234,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            var SubId = userManager.FindByEmail("S@outlook.com").Id;
+            userId = userManager.FindByEmail("S@outlook.com").Id;
             userManager.AddToRole(userId, "Submitter");
 
 
@@ -253,7 +253,7 @@ namespace BugTracker.Migrations
 
                 //Associate a User to a role
             }
-            SubId = userManager.FindByEmail("S2@outlook.com").Id;
+            userId = userManager.FindByEmail("S2@outlook.com").Id;
             userManager.AddToRole(userId, "Submitter");
 
 
@@ -270,11 +270,86 @@ namespace BugTracker.Migrations
                     DisplayName = "Sub3"
                 }, "Abc&123!");
 
-                //Associate a User to a role
+                //Associate a User to a  
             }
-            SubId = userManager.FindByEmail("S3@outlook.com").Id;
+            userId = userManager.FindByEmail("S3@outlook.com").Id;
             userManager.AddToRole(userId, "Submitter");
 
+
+
+            //Demo-Users
+
+            if (!context.Users.Any(u => u.Email == "DemoAdmin@mailinator.com"))
+            {
+
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoAdmin@mailinator.com",
+                    Email = "DemoAdmin@mailinator.com",
+                    FirstName = "DemoAdmin",
+                    LastName = "Demo",
+                    DisplayName = "Admin"
+                }, "Abc&123!");
+
+                //Associate a User to a role
+            }
+            userId = userManager.FindByEmail("DemoAdmin@mailinator.com").Id;
+            userManager.AddToRole(userId, "Admin");
+
+
+
+            if (!context.Users.Any(u => u.Email == "DemoDev@mailinator.com"))
+            {
+
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoDev@mailinator.com",
+                    Email = "DemoDev@mailinator.com",
+                    FirstName = "DemoDev",
+                    LastName = "Demo",
+                    DisplayName = "Developer"
+                }, "Abc&123!");
+
+                //Associate a User to a role
+            }
+            userId = userManager.FindByEmail("DemoDev@mailinator.com").Id;
+            userManager.AddToRole(userId, "Developer");
+
+            if (!context.Users.Any(u => u.Email == "DemoPM@mailinator.com"))
+            {
+
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoPM@mailinator.com",
+                    Email = "DemoPM@mailinator.com",
+                    FirstName = "DemoPm",
+                    LastName = "Demo",
+                    DisplayName = "Project Manager"
+                }, "Abc&123!");
+
+                //Associate a User to a role
+            }
+            userId = userManager.FindByEmail("DemoPM@mailinator.com").Id;
+            userManager.AddToRole(userId, "Project Manager");
+
+
+
+            if (!context.Users.Any(u => u.Email == "DemoSub@mailinator.com"))
+            {
+
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoSub@mailinator.com",
+                    Email = "DemoSub@mailinator.com",
+                    FirstName = "DemoSub",
+                    LastName = "Demo",
+                    DisplayName = "Submitter"
+                }, "Abc&123!");
+
+                //Associate a User to a role
+            }
+            userId = userManager.FindByEmail("DemoSub@mailinator.com").Id;
+            userManager.AddToRole(userId, "Submitter");
         }
     }
 }

@@ -21,7 +21,6 @@ namespace BugTracker.Controllers
             return View();
         }
 
-
         public ActionResult About() //var ticket in project.tickets.where(t=>t.project.Id)
         {
             ViewBag.Message = "Your application description page.";
@@ -43,6 +42,14 @@ namespace BugTracker.Controllers
             return View();
         }
 
+        
+       
+        public ActionResult ReadNotification(int Id)
+        {
+            var notify = db.TicketNotifications.Find(Id);
+            db.SaveChanges();
+            return Redirect(Request.ServerVariables["http_referer"]);
+        }
         //HTTP : GET
         public ActionResult Contact()
         {

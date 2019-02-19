@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BugTracker.Helpers
         ApplicationDbContext db = new ApplicationDbContext();
 
 
-        public void Notify (Ticket oldTicket, Ticket newTicket)
+        public async Task Notify (Ticket oldTicket, Ticket newTicket)
         {
             // The purpose of this method is to determine whtehr or not the system need to genereate a ticket notifications record
 
@@ -31,7 +32,8 @@ namespace BugTracker.Helpers
             var newNotification = new TicketNotification
             {
                 Created = DateTime.Now,
-                TicketId = newTicket.Id
+                TicketId = newTicket.Id,
+               
             };
 
             //Condition 1: The ticket is newly assigned. OldTicket (not assigned), newTicket(assigned)
@@ -40,7 +42,8 @@ namespace BugTracker.Helpers
                 //This condition triggers an assignment notification
                 newNotification.RecipientId = newUserId;
                 newNotification.Description = $"You've have been assigned to ticket {newTicket.Id}";
-              
+
+                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserTwoId, newTicket.AssignedToUserTwoId);
                 db.TicketNotifications.Add(newNotification);
                 db.SaveChanges();
             }
@@ -51,7 +54,8 @@ namespace BugTracker.Helpers
             {
                 newNotification.RecipientId = oldUserId;
                 newNotification.Description = $"You've been reassigned from ticket {newTicket.Id}";
-                
+
+                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserTwoId, newTicket.AssignedToUserTwoId);
                 db.TicketNotifications.Add(newNotification);
                 db.SaveChanges();
             }
@@ -73,7 +77,7 @@ namespace BugTracker.Helpers
 
                 };
 
-                
+                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserTwoId, newTicket.AssignedToUserTwoId);
                 db.TicketNotifications.Add(secondNotification);
                 db.SaveChanges();
             }
@@ -106,10 +110,10 @@ namespace BugTracker.Helpers
                 await SendEmail(assignedMailModel);
             }
 
-            else if (oldUserId != null && newUserId == null)
+            else if (oldUserId != null && newUserId != null)
             {
-                subject = "Ticket Reassignment";
-                body = $"You have been reassigned to Ticket Id {ticketId}";
+                subject = "Ticket Assignment";
+                body = $"You have been assigned to Ticket Id {ticketId}";
                 emailTo = db.Users.Find(newUserId).Email;
 
                 var reAssignedNewUser = db.Users.Find(newUserId);
@@ -127,6 +131,7 @@ namespace BugTracker.Helpers
 
                 await SendEmail(reAssignedNewUserMailModel);
 
+                subject = "Ticket Unassignment";
                 body = $"You have been UnAssigned from Ticket Id {ticketId}";
                 emailTo = db.Users.Find(oldUserId).Email;
 
@@ -159,7 +164,18 @@ namespace BugTracker.Helpers
             var svc = new PersonalEmail();
             await svc.SendAsync(email);
         }
+
+        public List<TicketNotification> UnreadNotifications()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+
+            return db.TicketNotifications.Where(t => t.RecipientId == userId && !t.Read).ToList();
+
+        }
+
+
     }
+
 
 
  }

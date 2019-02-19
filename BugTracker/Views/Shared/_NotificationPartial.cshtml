@@ -1,0 +1,24 @@
+﻿@model IEnumerable<BugTracker.Models.TicketNotification>
+
+
+@foreach(var notif in Model)
+{
+    <a class="dropdown-item preview-item" href ="@Url.Action("ReadNotification","Home", new { id = notif.Id}) ">
+        <div class="preview-thumbnail">
+            <div class="preview-icon bg-success">
+                <i class="mdi mdi-alert-circle-outline mx-0"></i>
+            </div>
+        </div>
+        <div class="preview-item-content">
+            <h6 class="preview-subject font-weight-medium text-dark">Ticket: @notif.Ticket.Title </h6>
+            <p class="font-weight-light small-text">
+                @notif.Description
+            </p>
+        </div>
+            <span class="badge badge-pill badge-danger float-right" >Mark as Read</span> 
+    </a>
+
+    <div class="dropdown-divider">
+
+    </div>
+}

@@ -15,21 +15,6 @@ namespace BugTracker.Helpers
         public static string GetNameFromId (string propertyName, string id)
         {
             var name = "";
-            //switch(propertyName)
-            //{
-            //    case "TicketPriorityId":
-            //        name = db.TicketPriorities.Find(Convert.ToInt32(id)).Name;
-            //        break;
-            //    case "TicketStatuses":
-            //        name = db.TicketStatuses.Find(Convert.ToInt32(id)).Name;
-            //        break;
-            //    case "TicketTypeId":
-            //        name = db.TicketTypes.Find(Convert.ToInt32(id)).Name;
-            //        break;
-            //    case "AssignedToUserId":
-            //        name = db.Users.Find(id).FirstName;
-            //        break;
-            //}
 
             if(propertyName == "TicketPriorityId")
             {
@@ -43,13 +28,31 @@ namespace BugTracker.Helpers
             {
                 name = db.TicketTypes.Find(Convert.ToInt32(id)).Name;
             }
-            else if(propertyName == "AssignedToUserId")
+            else if(propertyName == "AssignedToUserTwoId")
             {
                 name = db.Users.Find(id).FirstName;
             }
 
+
             return name;
         }
 
+        
     }
 }
+
+//switch(propertyName)
+//{
+//    case "TicketPriorityId":
+//        name = db.TicketPriorities.Find(Convert.ToInt32(id)).Name;
+//        break;
+//    case "TicketStatuses":
+//        name = db.TicketStatuses.Find(Convert.ToInt32(id)).Name;
+//        break;
+//    case "TicketTypeId":
+//        name = db.TicketTypes.Find(Convert.ToInt32(id)).Name;
+//        break;
+//    case "AssignedToUserId":
+//        name = db.Users.Find(id).FirstName;
+//        break;
+//}

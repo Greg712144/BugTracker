@@ -26,6 +26,33 @@ namespace BugTracker.Controllers
             return View(db.Users.ToList());
         }
 
+        // GET: Demo Users
+        
+        public ActionResult DemoIndex()
+        {
+            return View();
+        }
+
+        public ActionResult AdminDash()
+        {
+            return View();
+        }
+
+        public ActionResult PmDash()
+        {
+            return View();
+        }
+
+        public ActionResult DevDash()
+        {
+            return View();
+        }
+
+        public ActionResult SubDash()
+        {
+            return View();
+        }
+
         // GET: Users/Details/5
         [Authorize(Roles = "Admin")]
         public ActionResult Details(string id)

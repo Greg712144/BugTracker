@@ -203,6 +203,7 @@
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\TicketAttachment.cs" />
     <Compile Include="Models\TicketComment.cs" />
@@ -232,11 +233,18 @@
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\dataTables.semanticui.css" />
     <Content Include="Content\dataTables.semanticui.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\materialdesignicons.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="img\Admin icon.png" />
+    <Content Include="img\adminy icon.png" />
     <Content Include="img\Bridge.jpg" />
+    <Content Include="img\Dev icon.jpg" />
+    <Content Include="img\Dev iconR.jpg" />
+    <Content Include="img\developer icon.png" />
     <Content Include="img\logo-mini.svg" />
     <Content Include="img\logo.svg" />
     <Content Include="img\alpha.png" />
@@ -273,6 +281,8 @@
     <Content Include="img\pic-2.png" />
     <Content Include="img\pic-3.png" />
     <Content Include="img\pic-4.png" />
+    <Content Include="img\pm icon.png" />
+    <Content Include="img\PRM.png" />
     <Content Include="img\RedApple.png" />
     <Content Include="Content\style.css" />
     <Content Include="Content\vendor.bundle.addons.css" />
@@ -283,7 +293,10 @@
     <Content Include="img\sprite-skin-modern.png" />
     <Content Include="img\sprite-skin-nice.png" />
     <Content Include="img\sprite-skin-simple.png" />
+    <Content Include="img\sub icon.png" />
+    <Content Include="img\Submittericon.png" />
     <Content Include="img\transparent.png" />
+    <Content Include="img\userdefault.png" />
     <Content Include="img\weather.svg" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\dashboard.js" />
@@ -429,6 +442,12 @@
     <Content Include="fonts\materialdesignicons-webfont.woff" />
     <Content Include="fonts\materialdesignicons-webfont.woff2" />
     <Content Include="Aprivate.config" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome.css.map" />
     <None Include="Properties\PublishProfiles\BugTrackerZ - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -548,6 +567,17 @@
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Uploads\Assigning Roles to Users.pdf" />
     <Content Include="Uploads\Assigning_Roles_to_Users.pdf" />
+    <Content Include="Views\Users\DemoIndex.cshtml" />
+    <Content Include="Views\Shared\_NotificationPartial.cshtml" />
+    <Content Include="Views\Shared\_AdminDashboard.cshtml" />
+    <Content Include="Views\Shared\_PmDashboard.cshtml" />
+    <Content Include="Views\Shared\_DevDashboard.cshtml" />
+    <Content Include="Views\Shared\_SubDashboard.cshtml" />
+    <Content Include="Views\Dashboards\AdminDash.cshtml" />
+    <Content Include="Views\Dashboards\PmDash.cshtml" />
+    <Content Include="Views\Dashboards\DevDash.cshtml" />
+    <Content Include="Views\Dashboards\SubDash.cshtml" />
+    <Content Include="Views\Shared\_Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

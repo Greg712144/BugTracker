@@ -39,7 +39,7 @@ namespace BugTracker.Helpers
                 case ".tiff":
                 case ".bmp":
                 case ".gif":
-                    icon = "fa fa-file-img-o";
+                    icon = "fa fa-file-image-o";
                     break;
                 default:
                     icon = "fa fa-file-code-o";

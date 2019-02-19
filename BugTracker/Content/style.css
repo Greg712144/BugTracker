@@ -71,6 +71,8 @@
   100% {
     opacity: 1; } }
 
+
+
 @-webkit-keyframes flash {
   0% {
     opacity: 1; }
@@ -10496,8 +10498,8 @@ tbody.collapse.show {
 
 @media (min-width: 576px) {
   .card-columns {
-    column-count: 3;
-    column-gap: 1.25rem; }
+    column-count: 2;
+    column-gap: 2.50rem; }
     .card-columns .card {
       display: inline-block;
       width: 100%; } }

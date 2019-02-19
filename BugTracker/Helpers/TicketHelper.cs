@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -48,14 +49,11 @@ namespace BugTracker.Helpers
             }
         }
 
-        //public ICollection<Ticket> ListUserTickets(string userId)
-        //{
-        //    var user = db.Users.Find(userId);
-
-
-        //    var tickets = user.Tickets.ToList();
-        //   return (tickets);
-        //}
+        public List<Ticket> ListUserTickets()
+        {
+            var tickets = db.Tickets.ToList();
+           return (tickets);
+        }
 
         public ICollection<ApplicationUser> UsersOnTicket(int ticketId)
         {

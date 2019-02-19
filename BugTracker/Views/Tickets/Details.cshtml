@@ -4,10 +4,12 @@
 
 @{
     ViewBag.Title = "Details";
+
 }
 
-<div class="row">
-    <div class="col-md-8">
+
+    <div class="card-columns text-center">
+
         <div class="card text-center">
             <div class="card-body">
                 <h2 class="card title">Ticket Info</h2>
@@ -17,7 +19,7 @@
                     <div class="text-left">
                         <hr />
                         <div class="post=header">
-                            <h4><b>Ticket Title:</b></h4> @Model.Title
+                            <h4><b>Title:</b></h4> @Model.Title
                         </div>
 
                         <div class="post-body">
@@ -36,11 +38,69 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <br />
+        <div class="card text-center">
+            <div class="card-body">
+                <h2>Comments</h2>
 
-    <div class="col-md-4">
+                <hr />
+
+                @foreach (var Comment in Model.TicketComments.OrderByDescending(c => c.Created))
+                {
+                    <p>@Html.Raw(Comment.CommentBody)</p>
+                    <p><b>Comment by @Comment.User.FirstName on @Comment.Created.ToString("MM/dd/yy") </b></p>
+
+
+                    <hr />
+                }
+
+                @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken();
+                    @Html.Hidden("TicketId", Model.Id);
+
+
+                    <div class="add-comment">
+                        <header>
+                            <h3 class="h6">Any comments?</h3>
+                        </header>
+                        <form action="#" class="commenting-form">
+                            <div class="row">
+
+                                <div class="form-group col-md-12">
+                                    @Html.Editor("CommentBody")
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-rounded btn-primary">Submit Comment</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <br />
+
+
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h2>Ticket History</h2>
+
+                <hr />
+
+                @foreach (var History in Model.TicketHistories.OrderByDescending(c => c.Changed))
+                {
+                    <p>The @History.PropertyName has been changed from "@LookupHelper.GetNameFromId(History.PropertyName, History.OldValue)" to "@LookupHelper.GetNameFromId(History.PropertyName, History.NewValue)"  </p>
+                    <p><b>Changed by @History.User.FirstName on @History.Changed.ToString("MM/dd/yy") </b></p>
+
+
+                    <hr />
+                }
+            </div>
+        </div>
+
         <div class="card text-center">
             <div class="card-body">
                 <h2>Attachments</h2>
@@ -59,22 +119,17 @@
 
                         <br />
 
-                        @{ 
-                            var iHelper = new iconHelper();
-                            var icon = iconHelper.GetAssociatedIcon("");
-
-                        }
-
                         @foreach (var attach in Model.TicketAttachments)
                         {
 
-                            
 
-                                <div class="text-left">
-                                     <a href=@Url.Content(attach.FilePath) target="_blank">@attach.FilePath.Split('/')[2]</a> <br />
-                                </div>
-                        
-                        
+
+                            <div class="text-left">
+
+                                <a href=@Url.Content(attach.FilePath) target="_blank"><i class="@iconHelper.GetAssociatedIcon(attach.FilePath) "></i>@attach.FilePath.Split('/')[2]</a> <br />
+                            </div>
+
+
                             <br />
 
                         }
@@ -82,7 +137,7 @@
                         <br />
                         <br />
                         <br />
-                        <div class="form-group"> 
+                        <div class="form-group">
                             <div class="col-md-offset-1 col-md-11">
 
                             </div>
@@ -93,59 +148,10 @@
 
             </div>
         </div>
+
+
     </div>
 
-    <br />
-
-</div>
-
-<br />
-
-<div class="row">
-    <div class="col-md-8">
-        <div class="card text-center">
-            <div class="card-body">
-                <h2>Comments</h2>
-
-                <hr />
-
-                @foreach (var Comment in Model.TicketComments.OrderByDescending(c => c.Created))
-                {
-                    <p>@Html.Raw(Comment.CommentBody)</p>
-                    <p><b>Comment by @Comment.User.FirstName on @Comment.Created.ToString("MM/dd/yy") </b></p>
-
-       
-                    <hr />
-                }
-              
-                    @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken();
-                        @Html.Hidden("TicketId", Model.Id);
-                      
-
-                        <div class="add-comment">
-                            <header>
-                                <h3 class="h6">Any comments?</h3>
-                            </header>
-                            <form action="#" class="commenting-form">
-                                <div class="row">
-
-                                    <div class="form-group col-md-12">
-                                        @Html.Editor("CommentBody")
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-rounded btn-primary">Submit Comment</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    }
-                
-            </div>
-        </div>
-    </div>
-</div>
 @section Scripts{
 
     <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
@@ -158,7 +164,6 @@
         });
     </script>
 
-   
      @Scripts.Render("~/bundles/jqueryval")
 
 }

@@ -15,6 +15,7 @@ namespace BugTracker.Models
         public string FilePath { get; set; }
         public string Description { get; set; }
         public DateTime Created { get; set; }
+        public bool Read { get; set; }
 
         //Navigational Properties
         public virtual Ticket Ticket { get; set; }

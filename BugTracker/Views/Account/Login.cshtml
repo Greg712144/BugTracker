@@ -48,15 +48,19 @@
                                 <div class="form-group">
                                     @*<button class="btn btn-primary submit-btn btn-block">Login</button>*@
                                     <input type="submit" value="Log in" class="btn btn-primary submit-btn btn-block" />
+
                                 </div>
                                 <div class="text-block text-center my-3">                                   
-                                        <p>@Html.ActionLink("Forgot your password?", "ForgotPassword")"</p>    
+                                        <p>@Html.ActionLink("Forgot your password?", "ForgotPassword")</p>
+                                        <p>@Html.ActionLink("Login in as Demo User", "DemoIndex", "Users")</p>
                                 </div>
                                 <div class="text-block text-center my-3">
                                     <span class="text-small font-weight-semibold">Not a member ?</span>
                                     <br />
                                     <br />
-                                    <p>@Html.ActionLink("Register as new user", "Register", "Account")"</p>
+                                    <p>@Html.ActionLink("Register as new user", "Register", "Account")</p>
+                                    
+
                                 </div>
 
 
