@@ -12,27 +12,44 @@
 
         <div class="card text-center">
             <div class="card-body">
-                <h2 class="card title">Ticket Info</h2>
+
+                <h2 class="card title">Ticket Info</h2><p>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</p>
 
                 <div class="ticket-details">
 
                     <div class="text-left">
                         <hr />
-                        <div class="post=header">
-                            <h4><b>Title:</b></h4> @Model.Title
-                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="post=header">
+                                    <h4><b>Title:</b></h4> @Model.Title
+                                </div>
 
-                        <div class="post-body">
-                            <h4><b>Description:</b></h4> @Html.Raw(Model.Description)
+                                <div class="post-body">
+                                    <h4><b>Description:</b></h4> @Html.Raw(Model.Description)
 
-                        </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="post-body">
+                                    <h4><b>Ticket Type:</b></h4> @Model.TicketType.Name
 
+                                </div>
+                                <div class="post-body">
+                                    <h4><b>Ticket Status:</b></h4> @Model.TicketStatus.Name
+
+                                </div>
+                                <div class="post-body">
+                                    <h4><b>Ticket Priority:</b></h4> @Model.TicketPriority.Name
+
+                                </div>
+                            </div>
+                        </div>      
                         <br />
 
                         <h4><b>Progress:</b></h4>
                         <div class="progress">
-                            <div class="progress-bar bg-warning progress-bar-striped" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0"
-                                 aria-valuemax="100"></div>
+                            <div class="progress-bar @ProgressBarHelper.GetColorClass(Model.Progress) progress-bar-striped" role="progressbar" style="width: @(Model.Progress)%"></div>
                         </div>
                     </div>
                 </div>

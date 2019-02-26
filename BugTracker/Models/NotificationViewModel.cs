@@ -9,5 +9,6 @@ namespace BugTracker.Models
     {
         public List<Ticket> Tickets { get; set; }
         public List<TicketNotification> Notifications { get; set; }
+        public List<ApplicationUser> Users { get; set; }
     }
 }

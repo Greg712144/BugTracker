@@ -16,16 +16,14 @@
                 <li class="list-group-item"> Create Projects and Tickets</li>
                 <li class="list-group-item"> Oversee progress of work</li>
                 <li class="list-group-item"> Access to forbidden areas</li>
+            </ul>
+            <div class="card-body">
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoAdmin@mailinator.com")
-                    <li class="list-group-item"><button class="btn btn-lg btn-primary" type="submit">Login as Demo-Admin</button></li>
+                    <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-
-            </ul>
-            <div class="card-body">
-                <a href="@Url.Action("Login", "Account")" class="card-link">Back to Registered Login</a>
             </div>
         </div>
     </div>
@@ -36,17 +34,16 @@
             <p class="card-text">As a Project Manager you have most control over your work aside from certain Administrator duties. Below are just a few things you can do as a Project Manager.</p>
             <ul class="list-group list-group-flush list-star">
                 <li class="list-group-item"> Assign/Unassign Projects, and Tickets to Developers</li>
-                <li class="list-group-item"> Create Projects and Tickets</li>
+                <li class="list-group-item"> Create Projects</li>
                 <li class="list-group-item"> Edit Projects and Tickets</li>
+            </ul>
+            <div class="card-body">
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoPM@mailinator.com")
-                    <li class="list-group-item"><button class="btn btn-lg btn-primary" type="submit">Login as Demo-PM</button></li>
+                    <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </ul>
-            <div class="card-body">
-                <a href="@Url.Action("Login","Account")" class="card-link">Back to Registered Login</a>
             </div>
         </div>
     </div>
@@ -59,15 +56,14 @@
                 <li class="list-group-item"> Assigned to work on Projects and Tickets</li>
                 <li class="list-group-item"> View Projects and Tickets you are currently working on</li>
                 <li class="list-group-item"> Create update comments on Tickets</li>
+            </ul>
+            <div class="card-body">
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoDev@mailinator.com")
-                    <li class="list-group-item"><button class="btn btn-lg btn-primary" type="submit">Login as Demo-Developer</button></li>
+                    <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </ul>
-            <div class="card-body">
-                <a href="@Url.Action("Login","Account")" class="card-link">Back to Registered Login</a>
             </div>
         </div>
     </div>
@@ -79,15 +75,14 @@
             <ul class="list-group list-group-flush list-star">
                 <li class="list-group-item"> Create Tickets</li>
                 <li class="list-group-item"> Edit and Comment on Tickets you have submitted</li>
+            </ul>
+            <div class="card-body">
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoSub@mailinator.com")
-                    <li class="list-group-item"><button class="btn btn-lg btn-primary" type="submit">Login as Demo-Submitter</button></li>
+                    <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </ul>
-            <div class="card-body">
-                <a href="@Url.Action("Login","Account")" class="card-link">Back to Registered Login</a>
             </div>
         </div>
     </div>

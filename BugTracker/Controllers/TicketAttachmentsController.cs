@@ -13,38 +13,17 @@ using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class TicketAttachmentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TicketAttachments
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var ticketAttachments = db.TicketAttachments.Include(t => t.Ticket).Include(t => t.User);
             return View(ticketAttachments.ToList());
-        }
-
-        // GET: TicketAttachments/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
-            if (ticketAttachment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketAttachment);
-        }
-
-        // GET: TicketAttachments/Create
-        public ActionResult Create()
-        {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "OwnerUserId");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
-            return View();
         }
 
         // POST: TicketAttachments/Create
@@ -52,6 +31,7 @@ namespace BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
         public ActionResult Create([Bind(Include = "TicketId")] TicketAttachment ticketAttachment, HttpPostedFileBase filePath)
         {
             if (ModelState.IsValid)
@@ -64,6 +44,7 @@ namespace BugTracker.Controllers
                     filePath.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
                     ticketAttachment.FilePath = "/Uploads/" + fileName;
                 }
+
 
                 
                 ticketAttachment.Created = DateTime.Now;
@@ -79,6 +60,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -114,6 +96,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

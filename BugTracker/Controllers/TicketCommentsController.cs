@@ -11,38 +11,17 @@ using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class TicketCommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TicketComments
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var ticketComments = db.TicketComments.Include(t => t.Ticket).Include(t => t.User);
             return View(ticketComments.ToList());
-        }
-
-        // GET: TicketComments/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketComment ticketComment = db.TicketComments.Find(id);
-            if (ticketComment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketComment);
-        }
-
-        // GET: TicketComments/Create
-        public ActionResult Create()
-        {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "OwnerUserId");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
-            return View();
         }
 
         // POST: TicketComments/Create
@@ -68,6 +47,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: TicketComments/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,6 +84,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: TicketComments/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

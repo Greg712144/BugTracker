@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using BugTracker.Models;
 using System.Net.Mail;
 using System.Web.Configuration;
+using BugTracker.Helpers;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -94,23 +96,7 @@ namespace BugTracker.Controllers
 
                     if(string.IsNullOrEmpty(returnUrl))
                     {
-                        if(demoEmail == "DemoAdmin@mailinator.com")
-                        {
-                            return RedirectToAction("AdminDash","Users");
-                        }
-                        else if(demoEmail == "DemoPM@mailinator.com")
-                        {
-                            return RedirectToAction("_PmDash","Users");
-                        }
-                        else if (demoEmail == "DemoDev@mailinator.com")
-                        {
-                            return RedirectToAction("_DevDash", "Users");
-                        }
-                        else if (demoEmail == "DemoSub@mailinator.com")
-                        {
-                            return RedirectToAction("_SubDash", "Users");
-                        }
-                        else
+
 
                         return RedirectToAction("Index", "Home");
                     }
@@ -185,7 +171,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase filePath)
         {
             if (ModelState.IsValid)
             {
@@ -194,8 +180,18 @@ namespace BugTracker.Controllers
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    DisplayName = model.DisplayName
+                    DisplayName = model.DisplayName,
+                    AvatarPath = model.Avatar
                 };
+
+
+                if (FileUploadValidator.IsWebFriendlyImage(filePath))
+                {
+                    var fileName = Path.GetFileName(filePath.FileName);
+                    fileName = fileName.Replace(' ', '_');
+                    filePath.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    model.Avatar = "/Uploads/" + fileName;
+                }
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

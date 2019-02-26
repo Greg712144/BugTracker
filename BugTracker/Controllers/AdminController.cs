@@ -74,9 +74,24 @@ namespace BugTracker.Controllers
             var Sub = roleHelper.UsersInRole("Submitter");
             ViewBag.Submitters = new MultiSelectList(Sub, "Id", "Email");
 
+            if (Pm == null)
+            {
+                User.Identity.GetUserId();
+            }
 
             //I want to load a Viewbag that holds each of the Projects in the system
-            ViewBag.Project = new SelectList(db.Projects, "Id", "Name");
+            var user = User.Identity.GetUserId();
+            var myProjects = projHelper.ListUserProjects(user);
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Project = new SelectList(db.Projects, "Id", "Name");
+            }
+            else
+            {
+                ViewBag.Project = new SelectList(myProjects, "Id", "Name");
+            }
+            
 
             return View();
         }
@@ -95,7 +110,15 @@ namespace BugTracker.Controllers
                     projHelper.RemoveUserFromProject(user.Id, project);
                 }
 
-                projHelper.AddUserToProject(ProjectManager, project);
+                if(User.IsInRole("Admin"))
+                {
+                    projHelper.AddUserToProject(ProjectManager, project);
+                }
+
+                if(ProjectManager == null)
+                {
+                    User.Identity.GetUserId();
+                }
                 
                 if (Developers != null)
                 {
@@ -127,8 +150,8 @@ namespace BugTracker.Controllers
             var PmId = roleHelper.UsersInRole("Project Manager");
             ViewBag.ProjectManager = new SelectList(PmId, "Id", "FirstName");
 
-            var DevId = roleHelper.UsersInRole("Developer");
-            ViewBag.Developers = new SelectList(DevId, "Id", "FirstName");
+            var dev = roleHelper.UsersInRole("Developer");
+            ViewBag.Developer = new SelectList(dev, "Id", "FirstName");
 
             //I want to load a Viewbag that holds each of the Projects in the system
             ViewBag.Ticket = new SelectList(db.Tickets, "Id", "Title");
@@ -139,18 +162,15 @@ namespace BugTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AssignTicket(int ticket, string ProjectManager, string Developer)
+        public ActionResult AssignTicket(int ticket, string Developer)
         {
             if (ModelState.IsValid)
             {
                 var myTicket = db.Tickets.Find(ticket);
                 db.Tickets.Attach(myTicket);
-                myTicket.AssignedToUserId = ProjectManager;
-                myTicket.AssignedToUserTwoId = Developer;
+                myTicket.AssignedToUserId = Developer;
 
                 db.SaveChanges();
-
-
             }
 
             

@@ -46,6 +46,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -168,6 +174,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\TicketAuthorization.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -175,6 +182,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ChartDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -182,24 +190,26 @@
     <Compile Include="Controllers\TicketCommentsController.cs" />
     <Compile Include="Controllers\TicketHistoriesController.cs" />
     <Compile Include="Controllers\TicketNotificationsController.cs" />
-    <Compile Include="Controllers\TicketPrioritiesController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
-    <Compile Include="Controllers\TicketStatusesController.cs" />
-    <Compile Include="Controllers\TicketTypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FileUploadValidator.cs" />
+    <Compile Include="Helpers\GetDataHelper.cs" />
     <Compile Include="Helpers\HistoryHelper.cs" />
     <Compile Include="Helpers\iconHelper.cs" />
     <Compile Include="Helpers\LookupHelper.cs" />
     <Compile Include="Helpers\NotificationHelper.cs" />
+    <Compile Include="Helpers\ProgressBarHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\TicketHelper.cs" />
     <Compile Include="Helpers\UserRolesHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BarChartData.cs" />
+    <Compile Include="Models\DataViewModel.cs" />
+    <Compile Include="Models\DoughnutChartData.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -238,10 +248,12 @@
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\materialdesignicons.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="img\Admin icon.png" />
     <Content Include="img\adminy icon.png" />
     <Content Include="img\Bridge.jpg" />
+    <Content Include="img\Default photo.png" />
     <Content Include="img\Dev icon.jpg" />
     <Content Include="img\Dev iconR.jpg" />
     <Content Include="img\developer icon.png" />
@@ -298,6 +310,7 @@
     <Content Include="img\transparent.png" />
     <Content Include="img\userdefault.png" />
     <Content Include="img\weather.svg" />
+    <Content Include="img\webiconspng - Mario PNG Image 67648.png" />
     <Content Include="Scripts\chart.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\dataTables\dataTables.bootstrap.js" />
@@ -474,8 +487,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -504,42 +515,17 @@
     <Content Include="Views\Projects\Delete.cshtml" />
     <Content Include="Views\Projects\Details.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
-    <Content Include="Views\Projects\Index.cshtml" />
-    <Content Include="Views\TicketAttachments\Create.cshtml" />
     <Content Include="Views\TicketAttachments\Delete.cshtml" />
-    <Content Include="Views\TicketAttachments\Details.cshtml" />
     <Content Include="Views\TicketAttachments\Edit.cshtml" />
     <Content Include="Views\TicketAttachments\Index.cshtml" />
-    <Content Include="Views\TicketComments\Create.cshtml" />
     <Content Include="Views\TicketComments\Delete.cshtml" />
-    <Content Include="Views\TicketComments\Details.cshtml" />
     <Content Include="Views\TicketComments\Edit.cshtml" />
     <Content Include="Views\TicketComments\Index.cshtml" />
-    <Content Include="Views\TicketHistories\Create.cshtml" />
     <Content Include="Views\TicketHistories\Delete.cshtml" />
-    <Content Include="Views\TicketHistories\Details.cshtml" />
     <Content Include="Views\TicketHistories\Edit.cshtml" />
     <Content Include="Views\TicketHistories\Index.cshtml" />
-    <Content Include="Views\TicketNotifications\Create.cshtml" />
     <Content Include="Views\TicketNotifications\Delete.cshtml" />
-    <Content Include="Views\TicketNotifications\Details.cshtml" />
-    <Content Include="Views\TicketNotifications\Edit.cshtml" />
     <Content Include="Views\TicketNotifications\Index.cshtml" />
-    <Content Include="Views\TicketPriorities\Create.cshtml" />
-    <Content Include="Views\TicketPriorities\Delete.cshtml" />
-    <Content Include="Views\TicketPriorities\Details.cshtml" />
-    <Content Include="Views\TicketPriorities\Edit.cshtml" />
-    <Content Include="Views\TicketPriorities\Index.cshtml" />
-    <Content Include="Views\TicketStatuses\Create.cshtml" />
-    <Content Include="Views\TicketStatuses\Delete.cshtml" />
-    <Content Include="Views\TicketStatuses\Details.cshtml" />
-    <Content Include="Views\TicketStatuses\Edit.cshtml" />
-    <Content Include="Views\TicketStatuses\Index.cshtml" />
-    <Content Include="Views\TicketTypes\Create.cshtml" />
-    <Content Include="Views\TicketTypes\Delete.cshtml" />
-    <Content Include="Views\TicketTypes\Details.cshtml" />
-    <Content Include="Views\TicketTypes\Edit.cshtml" />
-    <Content Include="Views\TicketTypes\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Admin\AssignRole.cshtml" />
@@ -550,17 +536,13 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Projects\Assigned.cshtml" />
     <Content Include="Views\Projects\AP.cshtml" />
-    <Content Include="Views\Projects\Index2.cshtml" />
     <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Views\Admin\AssignProject.cshtml" />
-    <Content Include="Views\Projects\EP.cshtml" />
-    <Content Include="Views\Projects\EIndex.cshtml" />
     <Content Include="Views\Account\Login2.cshtml" />
     <Content Include="Views\Tickets\ticketIndex.cshtml" />
     <Content Include="Views\Tickets\myTickets.cshtml" />
     <Content Include="Views\Tickets\AssignedT.cshtml" />
-    <Content Include="Views\Tickets\EtIndex.cshtml" />
     <Content Include="Views\Tickets\Edit2.cshtml" />
     <Content Include="Views\Admin\AssignTicket.cshtml" />
     <Content Include="Scripts\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
@@ -569,18 +551,15 @@
     <Content Include="Uploads\Assigning_Roles_to_Users.pdf" />
     <Content Include="Views\Users\DemoIndex.cshtml" />
     <Content Include="Views\Shared\_NotificationPartial.cshtml" />
-    <Content Include="Views\Shared\_AdminDashboard.cshtml" />
-    <Content Include="Views\Shared\_PmDashboard.cshtml" />
-    <Content Include="Views\Shared\_DevDashboard.cshtml" />
-    <Content Include="Views\Shared\_SubDashboard.cshtml" />
-    <Content Include="Views\Dashboards\AdminDash.cshtml" />
-    <Content Include="Views\Dashboards\PmDash.cshtml" />
-    <Content Include="Views\Dashboards\DevDash.cshtml" />
-    <Content Include="Views\Dashboards\SubDash.cshtml" />
+    <Content Include="Views\Dashboards\Index.cshtml" />
     <Content Include="Views\Shared\_Home.cshtml" />
+    <Content Include="Views\Manage\ChangeDisplayName.cshtml" />
+    <Content Include="Views\Users\Edit2.cshtml" />
+    <Content Include="Views\Tickets\subTickets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ChartData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

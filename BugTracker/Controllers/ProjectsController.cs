@@ -12,24 +12,13 @@ using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private UserRolesHelper roleHelper = new UserRolesHelper();
         private ProjectHelper projHelper = new ProjectHelper();
         private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationUser aUser = new ApplicationUser(); 
-
-        // GET: Projects
-        [Authorize]
-        public ActionResult Index()
-        {
-            return View();
-        }
-         //GET: Projects
-        public ActionResult Index2()
-        {
-            return View();
-        }
 
         // GET: Projects/Details/5
         [Authorize(Roles = "Admin, Project Manager")]
@@ -67,7 +56,7 @@ namespace BugTracker.Controllers
                 project.Created = DateTime.Now;
                 db.Projects.Add(project);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(project);
@@ -86,6 +75,10 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
+
+            var Dev = roleHelper.UsersInRole("Developer");
+            ViewBag.Developers = new MultiSelectList(Dev, "Id", "Email");
+
             return View(project);
         }
 
@@ -99,10 +92,15 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                project.Created = DateTime.Now;
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
+
+            var Dev = roleHelper.UsersInRole("Developer");
+            ViewBag.Developers = new MultiSelectList(Dev, "Id", "Email");
+
             return View(project);
         }
 
@@ -131,7 +129,7 @@ namespace BugTracker.Controllers
             Project project = db.Projects.Find(id);
             db.Projects.Remove(project);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)
@@ -161,7 +159,7 @@ namespace BugTracker.Controllers
             {
                 db.Projects.Add(project);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(project);
@@ -188,30 +186,7 @@ namespace BugTracker.Controllers
             {
                 db.Projects.Add(project);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(project);
-        }
-        // GET: Projects/EP
-        [Authorize(Roles = "Admin, Project Manager")]
-        public ActionResult EP()
-        {
-            return View(db.Projects.ToList());
-        }
-
-        // POST: Projects/Assigned
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EP([Bind(Include = "Id,Name,Description")] Project project)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Projects.Add(project);
-                db.SaveChanges();
-                return RedirectToAction("EP");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(project);

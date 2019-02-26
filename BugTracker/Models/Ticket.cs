@@ -15,12 +15,14 @@ namespace BugTracker.Models
         public int TicketTypeId { get; set; }
         public int TicketStatusId { get; set; }
         public int TicketPriorityId { get; set; }
+       
 
        
         public string OwnerUserId { get; set; }
         public string AssignedToUserId { get; set; }
-        public string AssignedToUserTwoId { get; set; }
 
+
+        public int Progress { get; set; }
         public string Title { get; set; }
         [AllowHtml]
         public string Description { get; set; }

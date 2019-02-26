@@ -1,4 +1,4 @@
-﻿
+﻿@model BugTracker.Models.Project
 @{
 
     ViewBag.Title = "AssignProject";
@@ -14,33 +14,38 @@
 
     @Html.AntiForgeryToken()
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card text-center">
                 <div class="card-body">
                     <h2>Assign/Unassign Projects</h2>
                     <hr />
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Users)
                     <div class="form-group">
-                        <b> @Html.Label("Choose a Project", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <b> @Html.Label("Choose a Project", htmlAttributes: new { @class = "control-label col-md-5" })</b>
                         <div class="col-md-12">
                             @Html.DropDownList("Project", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Assign a Project Manager", htmlAttributes: new { @class = "control-label col-md-2" })</b>
-                        <div class="col-md-12">
-                            @Html.DropDownList("Project Manager", null, htmlAttributes: new { @class = "form-control" })
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="form-group">
+                            <b>@Html.Label("Assign a Project Manager", htmlAttributes: new { @class = "control-label col-md-5" })</b>
+                            <div class="col-md-12">
+                                @Html.DropDownList("ProjectManager", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="form-group">
-                        <b> @Html.Label("Assign a Developer(s)", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <b> @Html.Label("Assign a Developer(s)", htmlAttributes: new { @class = "control-label col-md-5" })</b>
                         <div class="col-md-12">
                             @Html.ListBox("Developers", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <b> @Html.Label("Assign a Submitter(s)", htmlAttributes: new { @class = "control-label col-md-2" })</b>
+                        <b> @Html.Label("Assign a Submitter(s)", htmlAttributes: new { @class = "control-label col-md-5" })</b>
                         <div class="col-md-12">
                             @Html.ListBox("Submitters", null, htmlAttributes: new { @class = "form-control" })
                         </div>

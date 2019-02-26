@@ -15,7 +15,7 @@
         <div class="card text-center">
             <div class="card-body">
 
-                <h2>All Projects</h2> <p>@Html.ActionLink("Create New", "Create") | @Html.ActionLink("Back to List", "Index")</p>
+                <h2>All Projects</h2> <p>@Html.ActionLink("Create New", "Create") | @Html.ActionLink("Back to Home", "Index", "Home")</p>
 
                 <hr />
 
@@ -38,6 +38,11 @@
                                 <th>
                                     @Html.Label("Submitter")
                                 </th>
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    <th></th>
+                                }
+                                
                             </tr>
                         </thead>
                         @{
@@ -72,6 +77,15 @@
                                         @user <br />
                                     }
                                 </td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                }
+
                             </tr>
 
                             }

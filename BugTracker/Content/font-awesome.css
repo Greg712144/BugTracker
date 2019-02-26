@@ -1292,7 +1292,9 @@
   content: "\f187";
 }
 .fa-bug:before {
-  content: "\f188";
+    content: "\f188";
+    color: #a3dc90;
+    font-size:25px;
 }
 .fa-vk:before {
   content: "\f189";

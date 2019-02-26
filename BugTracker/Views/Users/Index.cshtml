@@ -3,30 +3,66 @@
 @{
     ViewBag.Title = "Index";
 
-   
+
 
 }
 
-<div class="card-deck">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Manage Users</h5>
+                    <div class="fluid-container">
+                        @foreach (var user in Model)
+                        {
 
-    @foreach (var user in Model)
-    {
+                            <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
+                                @{
+                                    var roleHelper = new UserRolesHelper();
+                                    var role = roleHelper.ListUserRoles(user.Id);
+                                }
+                                <div class="col-md-1">
+                                    <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/sub icon.png" alt="profile image">
+                                </div>
+                                <div class="ticket-details col-md-9">
+                                    <div class="d-flex">
+                                        <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">@user.FirstName  @user.LastName :</p>
+                                        <p class="text-primary mr-1 mb-0">@role.FirstOrDefault()</p>
+                                        <p class="mb-0 ellipsis">@user.Email</p>
+                                    </div>
+                                    <p class="text-gray ellipsis mb-2">
+                                                  About Me:  
+                                    </p>
+                                    <div class="row text-gray d-md-flex d-none">
+                                        <div class="col-4 d-flex">
+                                            <small class="mb-0 mr-2 text-muted text-muted"># of Projects on :</small>
+                                            <small class="Last-responded mr-2 mb-0 text-muted text-muted">@user.Projects.Count()</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions col-md-2">
+                                    <div class="btn-group dropdown">
+                                        <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Manage
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="@Url.Action("Edit","Users", new { id = user.Id})">
+                                                <i class="fa fa-reply fa-fw"></i>Edit
+                                            </a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete","Users", new { id = user.Id})">
+                                                <i class="fa fa-history fa-fw"></i>Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
 
-        <img class="card-img-top" src="~/img/sub icon.png" alt="Card image cap">
-        <div class="card-body">
-            @{
-                var roleHelper = new UserRolesHelper();
-                var role = roleHelper.ListUserRoles(user.Id);
-            }
-            <h5 class="card-title">@user.FirstName @user.LastName</h5>
-            <p class="card-text">@user.Email</p>
-            <p class="card-text"><small class="text-muted">@role.FirstOrDefault()</small></p>
+                    </div>
+                </div>
+            </div>
         </div>
-    }
-</div>
-
-                   
-
+    </div>
 
 
 

@@ -12,7 +12,7 @@
         <div class="card text-center">
             <div class="card-body">
 
-                <h2>Assigned Projects</h2><p>@Html.ActionLink("Back to List", "Index")</p>
+                <h2>Assigned Projects</h2><p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
                 <hr />
 
                 <div class="table-responsive">
@@ -34,6 +34,7 @@
                                 <th>
                                     @Html.Label("Submitter")
                                 </th>
+                                <th></th>
                             </tr>
                         </thead>
                         @{
@@ -43,32 +44,37 @@
                             @foreach (var item in Model)
                             {
 
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        @foreach (var user in projHelper.GetProjectUserRoles("Project Manager", item.Id).ToList())
-                                        {
-                                            @user <br />
-                                        }
-                                    </td>
-                                    <td>
-                                        @foreach (var user in projHelper.GetProjectUserRoles("Developer", item.Id).ToList())
-                                        {
-                                            @user <br />
-                                        }
-                                    </td>
-                                    <td>
-                                        @foreach (var user in projHelper.GetProjectUserRoles("Submitter", item.Id).ToList())
-                                        {
-                                            @user <br />
-                                        }
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @foreach (var user in projHelper.GetProjectUserRoles("Project Manager", item.Id).ToList())
+                                    {
+                                        @user <br />
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var user in projHelper.GetProjectUserRoles("Developer", item.Id).ToList())
+                                    {
+                                        @user <br />
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var user in projHelper.GetProjectUserRoles("Submitter", item.Id).ToList())
+                                    {
+                                        @user <br />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
 
                             }
                         </tbody>

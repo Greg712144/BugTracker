@@ -49,10 +49,18 @@ namespace BugTracker.Helpers
             }
         }
 
-        public List<Ticket> ListUserTickets()
+        public ICollection<Ticket> ListUserTickets()
         {
-            var tickets = db.Tickets.ToList();
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var tickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
            return (tickets);
+        }
+
+        public ICollection<Ticket> ListSubTickets()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var tickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+            return (tickets);
         }
 
         public ICollection<ApplicationUser> UsersOnTicket(int ticketId)
@@ -62,9 +70,12 @@ namespace BugTracker.Helpers
 
         
 
-        //public ICollection<ApplicationUser> UsersNotOnTicket(int ticketId)
+        //public ICollection<ApplicationUser> UsersNotOnTicket()
         //{
+        //    var userId = db.Users.ToString();
+        //    return db.Tickets.Where(t => t.Users.All(u => u.Id != userId)).ToList();
         //    return db.Users.Where(u => u.Tickets.All(p => p.Id != ticketId)).ToList();
+
         //}
 
         public ICollection<string>GetTicketUserRoles(string roleName, int ticketId )

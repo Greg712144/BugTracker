@@ -1,5 +1,5 @@
 ﻿@model BugTracker.Models.Project
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Edit";
 }
@@ -11,18 +11,18 @@
     @Html.AntiForgeryToken()
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
 
-                    <h2>Project Edit</h2><p>@Html.ActionLink("Back to List", "Index")</p>
+                    <h2>Project Edit</h2><p>@Html.ActionLink("Back to Home", "Index", "Home")</p>
 
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <b>@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })</b>
                         <div class="col-md-12">
                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -30,17 +30,43 @@
                     </div>
                     <br />
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <b>@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })</b>
                         <div class="col-md-12">
                             @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <b> @Html.Label("Assign a Developer(s)", htmlAttributes: new { @class = "control-label col-md-5" })</b>
+                        <div class="col-md-12">
+                            @Html.ListBox("Developers", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
                     <br />
                     <br />
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                            @if (User.Identity.Name == "DemoAdmin@mailinator.com")
+                            {
+                            <button type="button" class="btn btn-primary" disabled>Save</button>
+                             }
+                            else if (User.Identity.Name == "DemoPM@mailinator.com")
+                            {
+                                <button type="button" class="btn btn-primary" disabled>Save</button>
+                             }
+                            else if (User.Identity.Name == "DemoDev@mailinator.com")
+                            {
+                                <button type="button" class="btn btn-primary" disabled>Save</button>
+                             }
+                            else if (User.Identity.Name == "DemoSub@mailinator.com")
+                            {
+                                <button type="button" class="btn btn-primary" disabled>Save</button>
+                             }
+                            else
+                            {
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            }
+
                         </div>
                     </div>
                 </div>

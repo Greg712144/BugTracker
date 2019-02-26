@@ -13,6 +13,7 @@ namespace BugTracker.Helpers
         
         public bool IsUserOnProject(string userId, int projectId)
         {
+
             var project = db.Projects.Find(projectId);
             var flag = project.Users.Any(u => u.Id == userId);
             return (flag);

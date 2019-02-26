@@ -26,9 +26,6 @@
                                     @Html.DisplayNameFor(model => model.Description)
                                 </th>
                                 <th>
-                                    @Html.Label("Project Manager")
-                                </th>
-                                <th>
                                     @Html.Label("Developer(s)")
                                 </th>
                             </tr>
@@ -47,9 +44,7 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AssignedToUserTwo.FirstName)
-                                    </td>
+
                                 </tr>
 
                             }

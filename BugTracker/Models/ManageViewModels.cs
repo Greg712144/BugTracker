@@ -11,7 +11,7 @@ namespace BugTracker.Models
         public bool HasFirstName { get; set; }
         public bool HasLastName { get; set; }
         public bool HasEmail { get; set; }
-        public bool HasDisplayName { get; set; }
+        public string DisplayName { get; set; }
         public bool HasAvatarPath { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
@@ -63,6 +63,7 @@ namespace BugTracker.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
 
     public class SetDisplayNameViewModel
     {

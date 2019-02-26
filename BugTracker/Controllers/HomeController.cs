@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace BugTracker.Controllers
 {
@@ -18,35 +20,32 @@ namespace BugTracker.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View();
-        }
 
-        public ActionResult About() //var ticket in project.tickets.where(t=>t.project.Id)
-        {
-            ViewBag.Message = "Your application description page.";
+            var data = new DataViewModel();
+            data.myProjects = db.Projects.ToList();
+            data.myTickets = db.Tickets.ToList();
+            data.myUsers = db.Users.ToList();
 
-            return View();
+            return View(data);
         }
 
         public ActionResult Login()
         {
-            ViewBag.Message = "Your contact page.";
-
+     
             return View();
         }
 
         public ActionResult Register()
         {
-            ViewBag.Message = "Your contact page.";
-
+           
             return View();
         }
 
-        
-       
         public ActionResult ReadNotification(int Id)
         {
             var notify = db.TicketNotifications.Find(Id);
+            notify.Read = true;
+            db.Entry(notify).Property(n => n.Read).IsModified = true;
             db.SaveChanges();
             return Redirect(Request.ServerVariables["http_referer"]);
         }

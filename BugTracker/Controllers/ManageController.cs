@@ -15,6 +15,7 @@ namespace BugTracker.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -56,6 +57,7 @@ namespace BugTracker.Controllers
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.ChangeDisplayNameSuccess ? "Your DisplayName has been changed"
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
@@ -214,7 +216,13 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
-        //
+        // GET: /Manage/ChangeDisplayName
+        public ActionResult ChangeDisplayName()
+        {
+            return View();
+        }
+
+
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
@@ -229,18 +237,23 @@ namespace BugTracker.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View();
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+
             }
+         
+            
+
             AddErrors(result);
             return View(model);
         }
@@ -378,6 +391,7 @@ namespace BugTracker.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            ChangeDisplayNameSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,

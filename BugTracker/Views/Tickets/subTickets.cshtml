@@ -3,7 +3,7 @@
 @using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "EtIndex";
+    ViewBag.Title = "subTickets";
 }
 
 
@@ -12,25 +12,27 @@
         <div class="card text-center">
             <div class="card-body">
 
-                <h2>Edit Tickets</h2><p>@Html.ActionLink("Back to Index", "ticketIndex")</p>
+                <h2>My Tickets</h2><p>@Html.ActionLink("Back to Index", "ticketIndex")</p>
                 <hr />
 
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table id=" tickTable" class="table">
                         <thead>
                             <tr>
-
+                                <th>
+                                    @Html.DisplayName("Submitted By")
+                                </th>
                                 <th>
                                     @Html.DisplayName("Project")
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Ticket Priority")
+                                    @Html.DisplayName("TicketPriority")
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Ticket Status")
+                                    @Html.DisplayName("TicketStatus")
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Ticket Type")
+                                    @Html.DisplayName("TicketType")
                                 </th>
                                 <th>
                                     @Html.DisplayName("Title")
@@ -39,27 +41,22 @@
                                     @Html.DisplayName("Description")
                                 </th>
                                 <th>
-                                    @Html.DisplayName("Submitted By")
-                                </th>
-                                <th>
-                                    @Html.DisplayName("Assigned Project Manager")
-                                </th>
-                                <th>
                                     @Html.DisplayName("Assigned Developer")
                                 </th>
                                 <th></th>
 
                             </tr>
                         </thead>
-                        @{
-                            var tickHelper = new TicketHelper();
-                        }
                         <tbody>
                             @foreach (var item in Model)
                             {
 
 
                                 <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+
+                                    </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Project.Name)
                                     </td>
@@ -79,21 +76,14 @@
                                         @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
-
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AssignedToUserTwo.FirstName)
+
                                     </td>
 
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                                         @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-
 
                                     </td>
                                 </tr>
@@ -109,4 +99,17 @@
     </div>
 </div>
 
+@section Scripts{
+
+
+    <script src="~/Scripts/dataTables/jquery.dataTables.min.js"></script>
+
+    <script src="~/Scripts/dataTables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $('#tickTable').dataTable();
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
 <!-- partial -->

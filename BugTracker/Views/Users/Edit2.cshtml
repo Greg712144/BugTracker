@@ -6,7 +6,7 @@
 
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit2","Users", FormMethod.Post, new { enctype = "Multipart/Form-Data" , @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
 
@@ -15,14 +15,14 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4>Edit User</h4>
+                    <h4>Edit Profile Information</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
                     @Html.HiddenFor(model => model.Email)
-                    @Html.HiddenFor(Model => Model.AvatarPath)
+                    @Html.HiddenFor(model => model.AvatarPath)
                     @*@Html.HiddenFor(model => model.PasswordHash)
-        @Html.HiddenFor(model => model.SecurityStamp)*@
+                        @Html.HiddenFor(model => model.SecurityStamp)*@
 
 
                     <div class="form-group">
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-12">
                             @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.DisplayName, "", new { @class = "text-danger" })
@@ -52,7 +52,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.AvatarPath, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-12">
-                            <input name="filePath" type="file" class=" form-control" id="fileUpload" />
+                            <input name ="filePath" type="file" class =" form-control" id ="fileUpload" />
                         </div>
                     </div>
 
@@ -67,28 +67,7 @@
                     }
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            @if (User.Identity.Name == "DemoAdmin@mailinator.com")
-                            {
-                                <button type="button" class="btn btn-primary" disabled>Save</button>
-
-                            }
-                            else if (User.Identity.Name == "DemoPM@mailinator.com")
-                            {
-                                <button type="button" class="btn btn-primary" disabled>Save</button>
-                            }
-                            else if (User.Identity.Name == "DemoDev@mailinator.com")
-                            {
-                                <button type="button" class="btn btn-primary" disabled>Save</button>
-                            }
-                            else if (User.Identity.Name == "DemoSub@mailinator.com")
-                            {
-                                <button type="button" class="btn btn-primary" disabled>Save</button>
-                            }
-                            else
-                            {
-                                <input type="submit" value="Save" class="btn btn-primary" />
-                            }
-
+                            <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </div>
 
@@ -99,5 +78,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Home", "Index", "Home")
 </div>

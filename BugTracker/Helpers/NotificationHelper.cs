@@ -18,8 +18,8 @@ namespace BugTracker.Helpers
         {
             // The purpose of this method is to determine whtehr or not the system need to genereate a ticket notifications record
 
-            var oldUserId = oldTicket.AssignedToUserTwoId;
-            var newUserId = newTicket.AssignedToUserTwoId;
+            var oldUserId = oldTicket.AssignedToUserId;
+            var newUserId = newTicket.AssignedToUserId;
            
 
 
@@ -43,7 +43,7 @@ namespace BugTracker.Helpers
                 newNotification.RecipientId = newUserId;
                 newNotification.Description = $"You've have been assigned to ticket {newTicket.Id}";
 
-                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserTwoId, newTicket.AssignedToUserTwoId);
+                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserId, newTicket.AssignedToUserId);
                 db.TicketNotifications.Add(newNotification);
                 db.SaveChanges();
             }
@@ -55,7 +55,7 @@ namespace BugTracker.Helpers
                 newNotification.RecipientId = oldUserId;
                 newNotification.Description = $"You've been reassigned from ticket {newTicket.Id}";
 
-                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserTwoId, newTicket.AssignedToUserTwoId);
+                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserId, newTicket.AssignedToUserId);
                 db.TicketNotifications.Add(newNotification);
                 db.SaveChanges();
             }
@@ -77,7 +77,7 @@ namespace BugTracker.Helpers
 
                 };
 
-                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserTwoId, newTicket.AssignedToUserTwoId);
+                await SendEmailNotification(newTicket.Id, oldTicket.AssignedToUserId, newTicket.AssignedToUserId);
                 db.TicketNotifications.Add(secondNotification);
                 db.SaveChanges();
             }
