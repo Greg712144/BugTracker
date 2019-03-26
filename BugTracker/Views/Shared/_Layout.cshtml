@@ -270,12 +270,16 @@
                             </div>
                         </li>
                     }
+                    @if(!Request.IsAuthenticated)
+                    {
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Register","Account")">
                                 <i class="menu-icon mdi mdi-file-document-box"></i>
                                 <span class="menu-title">Register</span>
                             </a>
                         </li>
+                    }
+
                     @if (Request.IsAuthenticated)
                     {
                         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))

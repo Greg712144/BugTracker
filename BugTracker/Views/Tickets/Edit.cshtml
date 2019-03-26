@@ -67,7 +67,7 @@
                         {
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.AssignedToUserId, "Assign Developer", htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.AssignedToUserId, "Assign Developer", htmlAttributes: new { @class = "control-label col-md-7" })
                                 <div class="col-md-10">
                                     @Html.DropDownList("AssignedToUserId", null, "--Select A Developer--", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })

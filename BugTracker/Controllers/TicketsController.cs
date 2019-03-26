@@ -53,12 +53,13 @@ namespace BugTracker.Controllers
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
         {
-            if(id == null)
+            var userId = User.Identity.GetUserId();
+
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var userId = User.Identity.GetUserId();
             Ticket ticket = db.Tickets.Find(id);
             if (ticket == null)
             {
@@ -116,7 +117,18 @@ namespace BugTracker.Controllers
                 ticket.OwnerUserId = User.Identity.GetUserId();
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+
+
+                if(User.IsInRole("Submitter"))
+                {
+                    return RedirectToAction("subTickets","Tickets");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+
+                }
             }
 
             var userId = User.Identity.GetUserId();
@@ -134,7 +146,8 @@ namespace BugTracker.Controllers
         [Authorize]
         public ActionResult Edit(int? id)
         {
-           
+            var userId = User.Identity.GetUserId();
+
             if (id == null)
             { 
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -146,7 +159,7 @@ namespace BugTracker.Controllers
             }
 
 
-            var userId = User.Identity.GetUserId();
+
             var tAssigned = roleHelper.UsersInRole("Developer");
             var myProjects = projHelper.ListUserProjects(userId);
             var myTickets = tickHelper.ListUserTickets();
@@ -158,6 +171,16 @@ namespace BugTracker.Controllers
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
+
+            if (User.IsInRole("Admin") || ticket.AssignedToUserId == userId || ticket.OwnerUserId == userId)
+            {
+                return View(ticket);
+            }
+            if (ticket.AssignedToUserId != userId || ticket.OwnerUserId != userId)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(ticket);
         }
 
@@ -168,7 +191,7 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,ProjectId,TicketTypeId,TicketStatusId,TicketPriorityId,Progress,OwnerUserId,AssignedToUserId,AssignedToUserTwoId,Title,Description,Created,Updated")] Ticket ticket)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 //Get a reference to the Old Ticket
                 var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);

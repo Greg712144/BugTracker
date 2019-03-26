@@ -19,7 +19,20 @@
                             <i class="mdi mdi-calendar text-danger icon-lg"></i>
                         </div>
                         <div class="float-right">
-                            <p class="mb-0 text-right">Total Projects</p>
+                            @if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
+                            {
+                                 <p class="mb-0 text-right">Total Projects On</p>
+                            }
+                            else if (User.IsInRole("Submitter"))
+                            {
+                                <p class="mb-0 text-right">Total Projects On</p>
+
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-right">Total Projects</p>
+
+                            }
                             <div class="fluid-container">
                                 @if (User.IsInRole("Admin"))
                                 {
@@ -49,13 +62,26 @@
                             <i class="mdi mdi-receipt text-warning icon-lg"></i>
                         </div>
                         <div class="float-right">
-                            <p class="mb-0 text-right">Total Tickets</p>
+                            @if (User.IsInRole("Developer"))
+                            {
+                                <p class="mb-0 text-right">Assigned Tickets</p>
+                            }
+                            else if (User.IsInRole("Submitter"))
+                            {
+                                <p class="mb-0 text-right">Submitted Tickets</p>
+
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-right">Total Tickets</p>
+
+                            }
                             <div class="fluid-container">
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
                                 {
                                     <h3 class="font-weight-medium text-right mb-0">@Model.myTickets.Count()</h3>
                                 }
-                                else if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
+                                else if (User.IsInRole("Developer"))
                                 {
                                     var tickHelper = new TicketHelper();
 
@@ -121,7 +147,7 @@
                             @if (User.IsInRole("Admin"))
                             {
 
-                                foreach (var tick in Model.myTickets.OrderByDescending(c => c.Created))
+                                foreach (var tick in Model.myTickets.OrderByDescending(c => c.Created).Take(5))
                                 {
                                     <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
                                         <div class="col-md-1">
@@ -315,27 +341,26 @@
             </div>
         </div>
     </div>
-    @if (User.IsInRole("Admin"))
-    {
-        <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Ticket Priority Bar chart</h4>
-                        <canvas id="barChart" style="height:230px"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">TicketType Doughnut Chart</h4>
-                        <canvas id="doughnutChart" style="height:250px"></canvas>
-                    </div>
+
+    <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Ticket Priority Bar chart</h4>
+                    <canvas id="barChart" style="height:230px"></canvas>
                 </div>
             </div>
         </div>
-    }
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">TicketType Doughnut Chart</h4>
+                    <canvas id="doughnutChart" style="height:250px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 

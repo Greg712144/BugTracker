@@ -21,54 +21,86 @@ namespace BugTracker.Controllers
         public JsonResult GetBarChartData()
         {
             var userId = User.Identity.GetUserId();
-            var myTick = db.Tickets.ToList();
-
-            if (User.IsInRole("Submitter"))
-            {
-                db.Tickets.Where(t => t.AssignedToUserId == userId);
-            }
-            else if (User.IsInRole("Developer"))
-            {
-                db.Tickets.Where(t => t.AssignedToUserId == userId);
-            }
-            else if (User.IsInRole("Project Manager"))
-            {
-                db.Tickets.Where(t => t.AssignedToUserId == userId);
-            }
-            else if (User.IsInRole("Admin"))
-            {
-                db.Tickets.ToList();
-            }
-
 
             var lCount = 0;
             var mCount = 0;
             var hCount = 0;
             var uCount = 0;
 
-            foreach (var tick in myTick)
+            if(User.IsInRole("Admin") || User.IsInRole("Project Manager"))
             {
-                if (tick.TicketPriority.Name == "Low")
+                var tTick = db.Tickets.ToList();
+
+                foreach (var tick in tTick)
                 {
-                    lCount++;
+                    if (tick.TicketPriority.Name == "Low")
+                    {
+                        lCount++;
+                    }
+                    if (tick.TicketPriority.Name == "Medium")
+                    {
+                        mCount++;
+                    }
+                    if (tick.TicketPriority.Name == "High")
+                    {
+                        hCount++;
+                    }
+                    if (tick.TicketPriority.Name == "Urgent")
+                    {
+                        uCount++;
+                    }
                 }
-                if (tick.TicketPriority.Name == "Medium")
+            }
+            else if(User.IsInRole("Developer"))
+            {
+                var myTick = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+
+                foreach (var tick in myTick)
                 {
-                    mCount++;
+                    if (tick.TicketPriority.Name == "Low")
+                    {
+                        lCount++;
+                    }
+                    if (tick.TicketPriority.Name == "Medium")
+                    {
+                        mCount++;
+                    }
+                    if (tick.TicketPriority.Name == "High")
+                    {
+                        hCount++;
+                    }
+                    if (tick.TicketPriority.Name == "Urgent")
+                    {
+                        uCount++;
+                    }
                 }
-                if(tick.TicketPriority.Name == "High")
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                var myTick = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+
+                foreach (var tick in myTick)
                 {
-                    hCount++;
-                }
-                if (tick.TicketPriority.Name == "Urgent")
-                {
-                    uCount++;
+                    if (tick.TicketPriority.Name == "Low")
+                    {
+                        lCount++;
+                    }
+                    if (tick.TicketPriority.Name == "Medium")
+                    {
+                        mCount++;
+                    }
+                    if (tick.TicketPriority.Name == "High")
+                    {
+                        hCount++;
+                    }
+                    if (tick.TicketPriority.Name == "Urgent")
+                    {
+                        uCount++;
+                    }
                 }
             }
 
 
-
-            
             var data = new BarChartData
             {
 
@@ -86,53 +118,73 @@ namespace BugTracker.Controllers
 
             //Collect necessary data
             var userId = User.Identity.GetUserId();
-            var myTicketList = db.Tickets.ToList();
-            
-
-            //List tickets being looked at
-            if(User.IsInRole("Submitter"))
-            {
-                db.Tickets.Where(t => t.AssignedToUserId == userId);
-            }
-            else if (User.IsInRole("Developer"))
-            {
-                db.Tickets.Where(t => t.AssignedToUserId == userId);
-            }
-            else if(User.IsInRole("Project Manager"))
-            {
-                db.Tickets.Where(t => t.AssignedToUserId == userId);
-            }
-            else if(User.IsInRole("Admin"))
-            {
-                db.Tickets.ToList();
-            }
 
             //create variable (x3) to convert to int
-
             var bCount = 0;
             var fCount = 0;
             var dCount = 0;
 
             //loop over tickets , and add 
-
-       
-
-            foreach (var tick in myTicketList)
+            if(User.IsInRole("Admin") || User.IsInRole("Project Manager"))
             {
-                if (tick.TicketType.Name == "Bug")
+                var tTicketList = db.Tickets.ToList();
+
+                foreach (var tick in tTicketList)
                 {
-                    bCount++;
-                }
-                if(tick.TicketType.Name == "Feature Update")
-                {
-                    fCount++;
-                }
-                if(tick.TicketType.Name == "Documentation Request")
-                {
-                    dCount++;
+                    if (tick.TicketType.Name == "Bug")
+                    {
+                        bCount++;
+                    }
+                    if (tick.TicketType.Name == "Feature Update")
+                    {
+                        fCount++;
+                    }
+                    if (tick.TicketType.Name == "Documentation Request")
+                    {
+                        dCount++;
+                    }
                 }
             }
-                
+            else if (User.IsInRole("Developer"))
+            {
+                var myTicketList = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+
+                foreach (var tick in myTicketList)
+                {
+                    if (tick.TicketType.Name == "Bug")
+                    {
+                        bCount++;
+                    }
+                    if (tick.TicketType.Name == "Feature Update")
+                    {
+                        fCount++;
+                    }
+                    if (tick.TicketType.Name == "Documentation Request")
+                    {
+                        dCount++;
+                    }
+                }
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+                var myTicketList = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+
+                foreach (var tick in myTicketList)
+                {
+                    if (tick.TicketType.Name == "Bug")
+                    {
+                        bCount++;
+                    }
+                    if (tick.TicketType.Name == "Feature Update")
+                    {
+                        fCount++;
+                    }
+                    if (tick.TicketType.Name == "Documentation Request")
+                    {
+                        dCount++;
+                    }
+                }
+            }
 
             var data = new DoughnutChartData
             {

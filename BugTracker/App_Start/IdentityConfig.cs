@@ -13,6 +13,7 @@ using Microsoft.Owin.Security;
 using BugTracker.Models;
 using System.Net.Mail;
 using System.Web.Configuration;
+using System.Net;
 
 namespace BugTracker
 {

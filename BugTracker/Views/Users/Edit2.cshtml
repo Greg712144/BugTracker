@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.AvatarPath, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.AvatarPath, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-12">
                             <input name ="filePath" type="file" class =" form-control" id ="fileUpload" />
                         </div>
@@ -65,11 +65,32 @@
                             </div>
                         </div>
                     }
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                @if (User.Identity.Name == "DemoAdmin@mailinator.com")
+                                {
+                                    <button type="button" class="btn btn-primary" disabled>Save</button>
+
+                                }
+                                else if (User.Identity.Name == "DemoPM@mailinator.com")
+                                {
+                                    <button type="button" class="btn btn-primary" disabled>Save</button>
+                                }
+                                else if (User.Identity.Name == "DemoDev@mailinator.com")
+                                {
+                                    <button type="button" class="btn btn-primary" disabled>Save</button>
+                                }
+                                else if (User.Identity.Name == "DemoSub@mailinator.com")
+                                {
+                                    <button type="button" class="btn btn-primary" disabled>Save</button>
+                                }
+                                else
+                                {
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                }
+
+                            </div>
                         </div>
-                    </div>
 
                 </div>
             </div>

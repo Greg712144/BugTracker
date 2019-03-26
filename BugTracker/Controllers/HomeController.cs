@@ -13,6 +13,7 @@ using PagedList.Mvc;
 namespace BugTracker.Controllers
 {
     [RequireHttps]
+    [Authorize]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -25,6 +26,7 @@ namespace BugTracker.Controllers
             data.myProjects = db.Projects.ToList();
             data.myTickets = db.Tickets.ToList();
             data.myUsers = db.Users.ToList();
+
 
             return View(data);
         }
@@ -69,7 +71,7 @@ namespace BugTracker.Controllers
                     var emailto = ConfigurationManager.AppSettings["emailto"];
                     var from = string.Format("Zblog<{0}>", emailto);
 
-                    model.Body = "This is a message from your blog site. The name and the email of the contacting person is above." + model.Body;
+                    model.Body = "This is a message from your bugtracker site. The name and the email of the contacting person is above." + model.Body;
 
                     var email = new MailMessage(from, emailto)
                     {
