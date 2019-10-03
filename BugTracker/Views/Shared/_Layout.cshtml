@@ -25,8 +25,10 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
-    <link href="~/img/RedApple.png" rel="icon" />
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
 </head>
 <body>
@@ -49,6 +51,7 @@
                 <div class="navbar-menu-wrapper d-flex align-items-center">
                     @{
                         var notifyHelper = new NotificationHelper();
+                        var user = HttpContext.Current.User.Identity.Name;
 
                     }
                     <ul class="navbar-nav navbar-nav-right">
@@ -85,7 +88,7 @@
                         </li>
                         <li class="nav-item dropdown d-none d-xl-inline-block">
                             <a class="nav-link dropdown-toggle" href="#UserDropdown" data-toggle="dropdown" aria-expanded="false">
-                                <span class="profile-text">Hello, @User.Identity.Name !</span>
+                                <span class="profile-text">Hello, @user !</span>
 
                                 <img class="img-xs rounded-circle" src="~/img/pic-1.png" alt="Profile image">
 
@@ -320,7 +323,7 @@
                 <footer class="footer">
                     <div class="container-fluid clearfix">
                         <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">
-                            Copyright © 2018
+                            Copyright © 2019
                             <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash Modified by Greg Zambrana</a>. All rights reserved.
                         </span>
                     </div>

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "DemoIndex";
+
 }
 
 
@@ -10,80 +11,73 @@
         <img class="card-img-top" src="~/img/adminy icon.png" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><b>Demo Admin</b></h5>
-            <p class="card-text">As the Admin you have full control of the application. Below are just a few things you can do as an Administrator.</p>
             <ul class="list-group list-group-flush list-star">
                 <li class="list-group-item"> Assign/Unassign Users to Roles, Projects, and Tickets</li>
                 <li class="list-group-item"> Create Projects and Tickets</li>
                 <li class="list-group-item"> Oversee progress of work</li>
                 <li class="list-group-item"> Access to forbidden areas</li>
             </ul>
-            <div class="card-body">
+            <br />
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoAdmin@mailinator.com")
                     <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </div>
         </div>
     </div>
     <div class="card">
         <img class="card-img-top" src="~/img/PRM.png" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><b>Demo Project Manager</b></h5>
-            <p class="card-text">As a Project Manager you have most control over your work aside from certain Administrator duties. Below are just a few things you can do as a Project Manager.</p>
             <ul class="list-group list-group-flush list-star">
                 <li class="list-group-item"> Assign/Unassign Projects, and Tickets to Developers</li>
                 <li class="list-group-item"> Create Projects</li>
                 <li class="list-group-item"> Edit Projects and Tickets</li>
             </ul>
-            <div class="card-body">
+            <br />
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoPM@mailinator.com")
                     <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </div>
         </div>
     </div>
     <div class="card">
         <img class="card-img-top" src="~/img/pm icon.png" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><b>Demo Developer</b></h5>
-            <p class="card-text">As a Developer you have limited control in what you can do aside from working on the projects and tickets assigned to you. Below are just a few things you can do as a Developer.</p>
             <ul class="list-group list-group-flush list-star">
                 <li class="list-group-item"> Assigned to work on Projects and Tickets</li>
                 <li class="list-group-item"> View Projects and Tickets you are currently working on</li>
                 <li class="list-group-item"> Create update comments on Tickets</li>
             </ul>
-            <div class="card-body">
+            <br />
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoDev@mailinator.com")
                     <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </div>
         </div>
     </div>
     <div class="card">
         <img class="card-img-top" src="~/img/Submittericon.png" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><b>Demo Submitter</b></h5>
-            <p class="card-text">As a Submitter you are very limited to what you can do in the application. Below are just a few things you can do as a Submitter.</p>
             <ul class="list-group list-group-flush list-star">
                 <li class="list-group-item"> Create Tickets</li>
+                <li class="list-group-item"> Edit Tickets you have submitted</li>
                 <li class="list-group-item"> Edit and Comment on Tickets you have submitted</li>
             </ul>
-            <div class="card-body">
-                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+            <br />
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("demoEmail", "DemoSub@mailinator.com")
                     <button class="btn btn-md btn-primary" type="submit">Login as Demo</button>
                 }
-            </div>
         </div>
     </div>
 </div>

@@ -76,7 +76,7 @@ namespace BugTracker.Controllers
 
             if(string.IsNullOrEmpty(demoEmail))
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     return View(model);
                 }

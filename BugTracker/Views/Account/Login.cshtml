@@ -1,84 +1,114 @@
 ﻿@model BugTracker.Models.LoginViewModel
 @{
     ViewBag.Title = "Login";
+    Layout = null;
 }
 
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.base.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.addons.css" rel="stylesheet" />
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
 
 
-<section id="loginform">
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-control", role = "form"}))
-    {
-        @Html.AntiForgeryToken()
+    <section id="loginform">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-control", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="container-scroller">
-            <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
-                <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
-                    <div class="row w-100">
-                        <div class="col-lg-4 mx-auto">
-                            <h2 class="text-center mb-4">Login</h2>
-                            <div class="auto-form-wrapper">
-                                <div class="form-group">
-                                    <label class="label">Username</label>
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Username" })
-                                        @*<input name="Username" type="email" class="form-control" placeholder="Username">*@
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="mdi mdi-check-circle-outline"></i>
-                                            </span>
-                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            <div class="container-scroller">
+                <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+                    <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+                        <div class="row w-100">
+                            <div class="col-lg-4 mx-auto">
+                                <h2 class="text-center mb-4" color ="white">Login</h2>
+                                <div class="auto-form-wrapper">
+                                    <div class="form-group">
+                                        <label class="label">Username</label>
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Username" })
+                                            @*<input name="Username" type="email" class="form-control" placeholder="Username">*@
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-check-circle-outline"></i>
+                                                </span>
+                                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="label">Password</label>
-                                    <div class="input-group">
-                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                                        @*<input name="Password" type="password" class="form-control" placeholder="Password">*@
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="mdi mdi-check-circle-outline"></i>
-                                            </span>
-                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        <label class="label">Password</label>
+                                        <div class="input-group">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                            @*<input name="Password" type="password" class="form-control" placeholder="Password">*@
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="mdi mdi-check-circle-outline"></i>
+                                                </span>
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    @*<button class="btn btn-primary submit-btn btn-block">Login</button>*@
-                                    <input type="submit" value="Log in" class="btn btn-primary submit-btn btn-block" />
+                                    <div class="form-group">
+                                        @*<button class="btn btn-primary submit-btn btn-block">Login</button>*@
+                                        <input type="submit" value="Log in" class="btn btn-primary submit-btn btn-block" />
 
-                                </div>
-                                <div class="text-block text-center my-3">                                   
+                                    </div>
+                                    <div class="text-block text-center my-3">
                                         <p>@Html.ActionLink("Forgot your password?", "ForgotPassword")</p>
                                         <p>@Html.ActionLink("Login in as Demo User", "DemoIndex", "Users")</p>
-                                </div>
-                                <div class="text-block text-center my-3">
-                                    <span class="text-small font-weight-semibold">Not a member ?</span>
-                                    <br />
-                                    <br />
-                                    <p>@Html.ActionLink("Register as new user", "Register", "Account")</p>
-                                    
+                                    </div>
+                                    <div class="text-block text-center my-3">
+                                        <span class="text-small font-weight-semibold">Not a member ?</span>
+                                        <br />
+                                        <br />
+                                        <p>@Html.ActionLink("Register as new user", "Register", "Account")</p>
+
+
+                                    </div>
+
+
 
                                 </div>
 
-
-
+                                <p class="footer-text text-center">copyright © 2019 Bootstrapdash Modified by Greg Zambrana. All rights reserved.</p>
                             </div>
-                            
-                            <p class="footer-text text-center">copyright © 2018 Bootstrapdash Modified by Greg Zambrana. All rights reserved.</p>
                         </div>
                     </div>
+                    <!-- content-wrapper ends -->
                 </div>
-                <!-- content-wrapper ends -->
+                <!-- page-body-wrapper ends -->
             </div>
-            <!-- page-body-wrapper ends -->
-        </div>
-    }
-</section>
-  
+        }
+    </section>
 
+
+</body>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -87,6 +117,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 }
+</html>
+
+
 
 
 

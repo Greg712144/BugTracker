@@ -99,6 +99,7 @@ namespace BugTracker.Controllers
             }
 
             var Dev = roleHelper.UsersInRole("Developer");
+           
             ViewBag.Developers = new MultiSelectList(Dev, "Id", "Email");
 
             return View(project);

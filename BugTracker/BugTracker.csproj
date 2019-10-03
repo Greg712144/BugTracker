@@ -227,6 +227,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="android-chrome-192x192.png" />
+    <Content Include="android-chrome-512x512.png" />
+    <Content Include="apple-touch-icon.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -249,6 +252,8 @@
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\materialdesignicons.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="favicon-16x16.png" />
+    <Content Include="favicon-32x32.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="img\Admin icon.png" />
     <Content Include="img\adminy icon.png" />
@@ -556,6 +561,7 @@
     <Content Include="Views\Manage\ChangeDisplayName.cshtml" />
     <Content Include="Views\Users\Edit2.cshtml" />
     <Content Include="Views\Tickets\subTickets.cshtml" />
+    <Content Include="site.webmanifest" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

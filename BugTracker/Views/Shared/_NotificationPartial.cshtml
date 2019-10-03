@@ -15,10 +15,22 @@
                 @notif.Description 
             </p>
         </div>
-            <span class="badge badge-pill badge-danger float-right" >Mark as Read</span> 
+        
+            <span class="badge badge-pill badge-danger float-right" id="ReadBad" >Mark as Read</span> 
     </a>
 
     <div class="dropdown-divider">
 
     </div>
 }
+
+<script>
+
+    $('#ReadBad').click(function () {
+
+        $('#ReadBad').hide();
+
+    });
+
+
+</script>

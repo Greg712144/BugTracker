@@ -13,6 +13,69 @@ namespace BugTracker.Helpers
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        //public async Task NotifyAssign (int ticket, string Developer)
+        //{
+        //    var tick = db.Tickets.Find(ticket);
+
+        //    var oldUserId = tick.AssignedToUserId;
+        //    var newUserId = Developer;
+
+        //    if (oldUserId == newUserId)
+        //        return;
+
+        //    var newNotification = new TicketNotification
+        //    {
+        //        Created = DateTime.Now,
+        //        TicketId = tick.Id,
+
+        //    };
+
+        //    //Condition 1: The ticket is newly assigned. OldTicket (not assigned), newTicket(assigned)
+        //    if (oldUserId == null && newUserId != null)
+        //    {
+        //        //This condition triggers an assignment notification
+        //        newNotification.RecipientId = newUserId;
+        //        newNotification.Description = $"You've have been assigned to ticket {tick.Id}";
+
+        //        await SendEmailNotification(tick.Id, tick.AssignedToUserId, Developer);
+        //        db.TicketNotifications.Add(newNotification);
+        //        db.SaveChanges();
+        //    }
+
+        //    //Condition 2 : The ticket has been newly assigned. OldTicket(assigned), newTicket(unassigned)
+
+        //    else if (oldUserId != null && newUserId == null)
+        //    {
+        //        newNotification.RecipientId = oldUserId;
+        //        newNotification.Description = $"You've been reassigned from ticket {tick.Id}";
+
+        //        await SendEmailNotification(tick.Id, tick.AssignedToUserId, Developer);
+        //        db.TicketNotifications.Add(newNotification);
+        //        db.SaveChanges();
+        //    }
+
+        //    //Condition 3 : Neither the oldTicket or the newTicket are null. Ticket is reassigned
+        //    else
+        //    {
+        //        newNotification.RecipientId = newUserId;
+        //        newNotification.Description = $"You have been assigned to ticket {tick.Id}";
+
+        //        db.TicketNotifications.Add(newNotification);
+
+        //        var secondNotification = new TicketNotification
+        //        {
+        //            Created = DateTime.Now,
+        //            TicketId = tick.Id,
+        //            RecipientId = oldUserId,
+        //            Description = $"You have been unassigned from ticket {tick.Id}"
+
+        //        };
+
+        //        await SendEmailNotification(tick.Id, tick.AssignedToUserId, Developer);
+        //        db.TicketNotifications.Add(secondNotification);
+        //        db.SaveChanges();
+        //    }
+        //}
 
         public async Task Notify (Ticket oldTicket, Ticket newTicket)
         {

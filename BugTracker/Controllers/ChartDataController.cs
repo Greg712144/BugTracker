@@ -21,6 +21,7 @@ namespace BugTracker.Controllers
         public JsonResult GetBarChartData()
         {
             var userId = User.Identity.GetUserId();
+            var tickets = db.Tickets.ToList();
 
             var lCount = 0;
             var mCount = 0;
@@ -29,9 +30,9 @@ namespace BugTracker.Controllers
 
             if(User.IsInRole("Admin") || User.IsInRole("Project Manager"))
             {
-                var tTick = db.Tickets.ToList();
+                
 
-                foreach (var tick in tTick)
+                foreach (var tick in tickets)
                 {
                     if (tick.TicketPriority.Name == "Low")
                     {
@@ -53,9 +54,8 @@ namespace BugTracker.Controllers
             }
             else if(User.IsInRole("Developer"))
             {
-                var myTick = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
 
-                foreach (var tick in myTick)
+                foreach (var tick in tickets.Where(t => t.AssignedToUserId == userId))
                 {
                     if (tick.TicketPriority.Name == "Low")
                     {
@@ -77,9 +77,8 @@ namespace BugTracker.Controllers
             }
             else if (User.IsInRole("Submitter"))
             {
-                var myTick = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
 
-                foreach (var tick in myTick)
+                foreach (var tick in tickets.Where(t => t.OwnerUserId == userId))
                 {
                     if (tick.TicketPriority.Name == "Low")
                     {
@@ -118,7 +117,7 @@ namespace BugTracker.Controllers
 
             //Collect necessary data
             var userId = User.Identity.GetUserId();
-
+            var tickets = db.Tickets.ToList();
             //create variable (x3) to convert to int
             var bCount = 0;
             var fCount = 0;
@@ -127,9 +126,8 @@ namespace BugTracker.Controllers
             //loop over tickets , and add 
             if(User.IsInRole("Admin") || User.IsInRole("Project Manager"))
             {
-                var tTicketList = db.Tickets.ToList();
 
-                foreach (var tick in tTicketList)
+                foreach (var tick in tickets)
                 {
                     if (tick.TicketType.Name == "Bug")
                     {
@@ -147,9 +145,8 @@ namespace BugTracker.Controllers
             }
             else if (User.IsInRole("Developer"))
             {
-                var myTicketList = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
 
-                foreach (var tick in myTicketList)
+                foreach (var tick in tickets.Where(t => t.AssignedToUserId == userId))
                 {
                     if (tick.TicketType.Name == "Bug")
                     {
@@ -167,9 +164,8 @@ namespace BugTracker.Controllers
             }
             else if (User.IsInRole("Submitter"))
             {
-                var myTicketList = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
 
-                foreach (var tick in myTicketList)
+                foreach (var tick in tickets.Where(t => t.OwnerUserId == userId))
                 {
                     if (tick.TicketType.Name == "Bug")
                     {

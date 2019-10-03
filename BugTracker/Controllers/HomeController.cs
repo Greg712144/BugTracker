@@ -21,11 +21,12 @@ namespace BugTracker.Controllers
         [Authorize]
         public ActionResult Index()
         {
-
+           
             var data = new DataViewModel();
             data.myProjects = db.Projects.ToList();
             data.myTickets = db.Tickets.ToList();
             data.myUsers = db.Users.ToList();
+
 
 
             return View(data);
@@ -47,7 +48,7 @@ namespace BugTracker.Controllers
         {
             var notify = db.TicketNotifications.Find(Id);
             notify.Read = true;
-            db.Entry(notify).Property(n => n.Read).IsModified = true;
+            db.Entry(notify).Property("Read").IsModified = true;
             db.SaveChanges();
             return Redirect(Request.ServerVariables["http_referer"]);
         }

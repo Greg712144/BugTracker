@@ -1,12 +1,42 @@
 ﻿@model BugTracker.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    Layout = null;
 }
 
 
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.base.css" rel="stylesheet" />
+    <link href="~/Content/vendor.bundle.addons.css" rel="stylesheet" />
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+</head>
+<body>
 
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "Multipart/Form-Data", @class = "form-control"}))
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "Multipart/Form-Data", @class = "form-control" }))
     {
         @Html.HiddenFor(model => model.Avatar)
         @Html.AntiForgeryToken()
@@ -67,17 +97,17 @@
                                     </div>
                                 </div>
                                 @*<div class="form-group">
-                                    <div class="input-group">
+                                        <div class="input-group">
 
-                                        @Html.TextBoxFor(m => m.Avatar, new { @class = "form-control", placeholder = "Profile Picture" })
-                                        @*<input name="Username" type="email" class="form-control" placeholder="Username">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" input name ="filePath" type="file" id="fileUpload">
-                                                <i class="mdi mdi-check-circle-outline"></i>
-                                            </span>
+                                            @Html.TextBoxFor(m => m.Avatar, new { @class = "form-control", placeholder = "Profile Picture" })
+                                            @*<input name="Username" type="email" class="form-control" placeholder="Username">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" input name ="filePath" type="file" id="fileUpload">
+                                                    <i class="mdi mdi-check-circle-outline"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>*@
+                                    </div>*@
                                 <div class="form-group">
                                     <div class="input-group">
                                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
@@ -121,7 +151,8 @@
         </div>
     }
 
-
+</body>
+</html>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

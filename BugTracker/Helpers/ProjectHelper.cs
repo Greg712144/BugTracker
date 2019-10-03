@@ -79,5 +79,23 @@ namespace BugTracker.Helpers
             }
             return usersInRole;
         }
+
+        public ICollection<Project> ProjectMissingRoles()
+        {
+            var badProjects = new List<Project>();
+            var allProjects = db.Projects.ToList();
+
+            foreach(var proj in allProjects)
+            {
+                if(IsUserOnProject("Project Manager", proj.Id) == false ||
+                    IsUserOnProject("Developer", proj.Id) == false ||
+                    IsUserOnProject("Submitter", proj.Id) == false)
+                {
+                    badProjects.Add(proj);
+                }
+            }
+
+            return badProjects;
+        }
     }
 }

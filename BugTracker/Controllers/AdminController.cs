@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,6 +17,7 @@ namespace BugTracker.Controllers
         private UserRolesHelper roleHelper = new UserRolesHelper();
         private ProjectHelper projHelper = new ProjectHelper();
         private TicketHelper tickHelper = new TicketHelper();
+        private NotificationHelper notifHelper = new NotificationHelper();
 
         // GET: Admin
         [Authorize(Roles = "Admin")]
@@ -81,7 +83,7 @@ namespace BugTracker.Controllers
 
             //I want to load a Viewbag that holds each of the Projects in the system
             var user = User.Identity.GetUserId();
-            var myProjects = projHelper.ListUserProjects(user);
+             var myProjects = projHelper.ListUserProjects(user);
 
             if (User.IsInRole("Admin"))
             {
@@ -147,7 +149,9 @@ namespace BugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager")]
         public ActionResult AssignTicket()
         {
+
             var PmId = roleHelper.UsersInRole("Project Manager");
+            
             ViewBag.ProjectManager = new SelectList(PmId, "Id", "FirstName");
 
             var dev = roleHelper.UsersInRole("Developer");
@@ -169,6 +173,8 @@ namespace BugTracker.Controllers
                 var myTicket = db.Tickets.Find(ticket);
                 db.Tickets.Attach(myTicket);
                 myTicket.AssignedToUserId = Developer;
+
+                //await notifHelper.NotifyAssign(ticket, Developer);
 
                 db.SaveChanges();
             }

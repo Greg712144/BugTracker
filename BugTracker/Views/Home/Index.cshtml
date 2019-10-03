@@ -2,12 +2,50 @@
 
 @using BugTracker.Helpers
 @using Microsoft.AspNet.Identity
-@{
-    var getData = new GetDataHelper();
-    
 
-}
 <!-- partial -->
+<section>
+    @if (TempData["Deny"] != null)
+    {
+        <div class="alert alert-info fade in nomargin">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <h4>Announcement!</h4>
+            <p>@TempData["Deny"]</p>
+
+        </div>
+    }
+    else if (TempData["SubOnly"] != null)
+    {
+        <div class="alert alert-info fade in nomargin">
+
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <h4>Announcement!</h4>
+            <p>@TempData["SubOnly"]</p>
+
+        </div>
+    }
+    else if (TempData["OwnOnly"] != null)
+    {
+        <div class="alert alert-info fade in nomargin">
+
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <h4>Announcement!</h4>
+            <p>@TempData["OwnOnly"]</p>
+
+        </div>
+    }
+    else if (TempData["DelOnly"] != null)
+    {
+        <div class="alert alert-info fade in nomargin">
+
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <h4>Announcement!</h4>
+            <p>@TempData["DelOnly"]</p>
+
+        </div>
+    }
+   
+</section>
 
 <div class="content-wrapper">
     <div class="row">
@@ -21,7 +59,7 @@
                         <div class="float-right">
                             @if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
                             {
-                                 <p class="mb-0 text-right">Total Projects On</p>
+                                <p class="mb-0 text-right">Total Projects On</p>
                             }
                             else if (User.IsInRole("Submitter"))
                             {
@@ -143,200 +181,216 @@
                         <h5 class="card-title mb-4">My Tickets</h5>
                     }
 
-                        <div class="fluid-container">
-                            @if (User.IsInRole("Admin"))
+                    <div class="fluid-container">
+                        @if (User.IsInRole("Admin"))
+                        {
+
+                            foreach (var tick in Model.myTickets.OrderByDescending(c => c.Created).Take(5))
                             {
-
-                                foreach (var tick in Model.myTickets.OrderByDescending(c => c.Created).Take(5))
-                                {
-                                    <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
-                                        <div class="col-md-1">
+                                <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
+                                    <div class="col-md-1">
 
 
-                                            <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                        <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                    </div>
+                                    <div class="ticket-details col-md-9">
+                                        <div class="d-flex">
+                                            @if (tick.AssignedToUser == null)
+                                            {
+                                                <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">Unassigned:</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">@tick.AssignedToUser.FirstName :</p>
+                                            }
+                                            <p class="text-primary mr-1 mb-0">[@tick.Title]</p>
+                                            <p class="mb-0 ellipsis">@tick.Created.ToString("MM/dd/yyyy")</p>
                                         </div>
-                                        <div class="ticket-details col-md-9">
-                                            <div class="d-flex">
-                                                @if (tick.AssignedToUser == null)
-                                                {
-                                                    <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">Unassigned:</p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">@tick.AssignedToUser.FirstName :</p>
-                                                }
-                                                <p class="text-primary mr-1 mb-0">[@tick.Title]</p>
-                                                <p class="mb-0 ellipsis">@tick.Created.ToString("MM/dd/yyyy")</p>
+                                        <p class="text-gray ellipsis mb-2">
+                                            Description : @tick.Description
+                                        </p>
+                                        <div class="row text-gray d-md-flex d-none">
+                                            <div class="col-4 d-flex ">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Type :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-success">@tick.TicketType.Name</span></small>
                                             </div>
-                                            <p class="text-gray ellipsis mb-2">
-                                                Description : @tick.Description
-                                            </p>
-                                            <div class="row text-gray d-md-flex d-none">
-                                                <div class="col-4 d-flex ">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Type :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-success">@tick.TicketType.Name</span></small>
-                                                </div>
-                                                <div class="col-4 d-flex">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Priority :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-danger">@tick.TicketPriority.Name</span></small>
-                                                </div>
-                                                <div class="col-4 d-flex">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Status :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-warning">@tick.TicketStatus.Name</span></small>
-                                                </div>
+                                            <div class="col-4 d-flex">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Priority :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-danger">@tick.TicketPriority.Name</span></small>
+                                            </div>
+                                            <div class="col-4 d-flex">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Status :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-warning">@tick.TicketStatus.Name</span></small>
                                             </div>
                                         </div>
-                                        <div class="ticket-actions col-md-2">
-                                            <div class="btn-group dropdown">
-                                                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Info
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="@Url.Action("Details", "Tickets", new { id = tick.Id })">
-                                                        <i class="fa fa-reply fa-fw"></i>Details
-                                                    </a>
-                                                </div>
+                                        <br />
+                                        <div class="progress">
+                                            <div class="progress-bar @ProgressBarHelper.GetColorClass(tick.Progress) progress-bar-striped" role="progressbar" style="width: @(tick.Progress)%"></div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="ticket-actions col-md-2">
+                                        <div class="btn-group dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Info
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="@Url.Action("Details", "Tickets", new { id = tick.Id })">
+                                                    <i class="fa fa-reply fa-fw"></i>Details
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </div>
                             }
-                            else if (User.IsInRole("Project Manager"))
+                        }
+                        else if (User.IsInRole("Project Manager"))
+                        {
+                            var userId = User.Identity.GetUserId();
+                            var proj = new ProjectHelper();
+
+                            foreach (var pHelp in proj.ListUserProjects(userId).OrderByDescending(c => c.Created))
                             {
-                                var userId = User.Identity.GetUserId();
-                                var proj = new ProjectHelper();
 
-                                foreach (var pHelp in proj.ListUserProjects(userId).OrderByDescending(c => c.Created))
-                                {
+                                <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
+                                    <div class="col-md-1">
+                                        <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                    </div>
+                                    <div class="ticket-details col-md-9">
+                                        <div class="d-flex">
 
-                                    <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
-                                        <div class="col-md-1">
-                                            <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                            <p class="text-primary mr-1 mb-0">[@pHelp.Name]</p>
+                                            <p class="mb-0 ellipsis">@pHelp.Created.ToString("MM/dd/yyyy")</p>
                                         </div>
-                                        <div class="ticket-details col-md-9">
-                                            <div class="d-flex">
-
-                                                <p class="text-primary mr-1 mb-0">[@pHelp.Name]</p>
-                                                <p class="mb-0 ellipsis">@pHelp.Created.ToString("MM/dd/yyyy")</p>
-                                            </div>
-                                            <p class="text-gray ellipsis mb-2">
-                                                Description : @pHelp.Description
-                                            </p>
-                                        </div>
-                                        <div class="ticket-actions col-md-2">
-                                            <div class="btn-group dropdown">
-                                                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Info
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="@Url.Action("Assigned", "Projects")">
-                                                        <i class="fa fa-reply fa-fw"></i>View
-                                                    </a>
-                                                </div>
+                                        <p class="text-gray ellipsis mb-2">
+                                            Description : @pHelp.Description
+                                        </p>
+                                    </div>
+                                    <div class="ticket-actions col-md-2">
+                                        <div class="btn-group dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Info
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="@Url.Action("Assigned", "Projects")">
+                                                    <i class="fa fa-reply fa-fw"></i>View
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </div>
                             }
-                            else if (User.IsInRole("Developer"))
+                        }
+                        else if (User.IsInRole("Developer"))
+                        {
+                            var tHelp = new TicketHelper();
+
+                            foreach (var tick in tHelp.ListUserTickets().OrderByDescending(c => c.Created))
                             {
-                                var tHelp = new TicketHelper();
 
-                                foreach (var tick in tHelp.ListUserTickets().OrderByDescending(c => c.Created))
-                                {
-
-                                    <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
-                                        <div class="col-md-1">
-                                            <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
+                                    <div class="col-md-1">
+                                        <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                    </div>
+                                    <div class="ticket-details col-md-9">
+                                        <div class="d-flex">
+                                            <p class="text-primary mr-1 mb-0">[@tick.Title]</p>
+                                            <p class="mb-0 ellipsis">@tick.Created.ToString("MM/dd/yyyy")</p>
                                         </div>
-                                        <div class="ticket-details col-md-9">
-                                            <div class="d-flex">
-                                                <p class="text-primary mr-1 mb-0">[@tick.Title]</p>
-                                                <p class="mb-0 ellipsis">@tick.Created.ToString("MM/dd/yyyy")</p>
+                                        <p class="text-gray ellipsis mb-2">
+                                            Description : @tick.Description
+                                        </p>
+                                        <div class="row text-gray d-md-flex d-none">
+                                            <div class="col-4 d-flex ">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Type :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-success">@tick.TicketType.Name</span></small>
                                             </div>
-                                            <p class="text-gray ellipsis mb-2">
-                                                Description : @tick.Description
-                                            </p>
-                                            <div class="row text-gray d-md-flex d-none">
-                                                <div class="col-4 d-flex ">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Type :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-success">@tick.TicketType.Name</span></small>
-                                                </div>
-                                                <div class="col-4 d-flex">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Priority :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-danger">@tick.TicketPriority.Name</span></small>
-                                                </div>
-                                                <div class="col-4 d-flex">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Status :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-warning">@tick.TicketStatus.Name</span></small>
-                                                </div>
+                                            <div class="col-4 d-flex">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Priority :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-danger">@tick.TicketPriority.Name</span></small>
+                                            </div>
+                                            <div class="col-4 d-flex">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Status :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-warning">@tick.TicketStatus.Name</span></small>
                                             </div>
                                         </div>
-                                        <div class="ticket-actions col-md-2">
-                                            <div class="btn-group dropdown">
-                                                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Info
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="@Url.Action("Details", "Tickets", new { id = tick.Id })">
-                                                        <i class="fa fa-reply fa-fw"></i>Details
-                                                    </a>
-                                                </div>
+                                        <br />
+                                        <div class="progress">
+                                            <div class="progress-bar @ProgressBarHelper.GetColorClass(tick.Progress) progress-bar-striped" role="progressbar" style="width: @(tick.Progress)%"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="ticket-actions col-md-2">
+                                        <div class="btn-group dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Info
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="@Url.Action("Details", "Tickets", new { id = tick.Id })">
+                                                    <i class="fa fa-reply fa-fw"></i>Details
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </div>
                             }
-                            else if (User.IsInRole("Submitter"))
+                        }
+                        else if (User.IsInRole("Submitter"))
+                        {
+                            var tHelp = new TicketHelper();
+
+                            foreach (var tick in tHelp.ListSubTickets().OrderByDescending(c => c.Created))
                             {
-                                var tHelp = new TicketHelper();
 
-                                foreach (var tick in tHelp.ListSubTickets().OrderByDescending(c => c.Created))
-                                {
-
-                                    <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
-                                        <div class="col-md-1">
-                                            <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
+                                    <div class="col-md-1">
+                                        <img class="img-sm rounded-circle mb-4 mb-md-0" src="~/img/pic-1.png" alt="profile image">
+                                    </div>
+                                    <div class="ticket-details col-md-9">
+                                        <div class="d-flex">
+                                            <p class="text-primary mr-1 mb-0">[@tick.Title]</p>
+                                            <p class="mb-0 ellipsis">@tick.Created.ToString("MM/dd/yyyy")</p>
                                         </div>
-                                        <div class="ticket-details col-md-9">
-                                            <div class="d-flex">
-                                                <p class="text-primary mr-1 mb-0">[@tick.Title]</p>
-                                                <p class="mb-0 ellipsis">@tick.Created.ToString("MM/dd/yyyy")</p>
+                                        <p class="text-gray ellipsis mb-2">
+                                            Description : @tick.Description
+                                        </p>
+                                        <div class="row text-gray d-md-flex d-none">
+                                            <div class="col-4 d-flex ">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Type :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-success">@tick.TicketType.Name</span></small>
                                             </div>
-                                            <p class="text-gray ellipsis mb-2">
-                                                Description : @tick.Description
-                                            </p>
-                                            <div class="row text-gray d-md-flex d-none">
-                                                <div class="col-4 d-flex ">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Type :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-success">@tick.TicketType.Name</span></small>
-                                                </div>
-                                                <div class="col-4 d-flex">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Priority :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-danger">@tick.TicketPriority.Name</span></small>
-                                                </div>
-                                                <div class="col-4 d-flex">
-                                                    <small class="mb-0 mr-2 text-muted text-muted">Status :</small>
-                                                    <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-warning">@tick.TicketStatus.Name</span></small>
-                                                </div>
+                                            <div class="col-4 d-flex">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Priority :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-danger">@tick.TicketPriority.Name</span></small>
+                                            </div>
+                                            <div class="col-4 d-flex">
+                                                <small class="mb-0 mr-2 text-muted text-muted">Status :</small>
+                                                <small class="Last-responded mr-2 mb-0 text-muted text-muted"><span class="badge badge-warning">@tick.TicketStatus.Name</span></small>
                                             </div>
                                         </div>
-                                        <div class="ticket-actions col-md-2">
-                                            <div class="btn-group dropdown">
-                                                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Info
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="@Url.Action("Details", "Tickets", new { id = tick.Id })">
-                                                        <i class="fa fa-reply fa-fw"></i>Details
-                                                    </a>
-                                                </div>
+                                        <br />
+                                        <div class="progress">
+                                            <div class="progress-bar @ProgressBarHelper.GetColorClass(tick.Progress) progress-bar-striped" role="progressbar" style="width: @(tick.Progress)%"></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="ticket-actions col-md-2">
+                                        <div class="btn-group dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Info
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="@Url.Action("Details", "Tickets", new { id = tick.Id })">
+                                                    <i class="fa fa-reply fa-fw"></i>Details
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </div>
                             }
-                         </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -364,9 +418,10 @@
 
 </div>
 
-@section Scripts{ 
+@section Scripts{
 
-    <script> 
+    <script>
+
 
         var options = {
             scales: {
@@ -426,7 +481,7 @@
 
             });
 
-            
+
         }
 
     </script>
@@ -476,7 +531,7 @@
                 });
 
             });
-            
+
         }
 
     </script>

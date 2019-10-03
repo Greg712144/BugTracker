@@ -72,6 +72,7 @@ namespace BugTracker.Controllers
             }
             if(ticket.AssignedToUserId != userId || ticket.OwnerUserId != userId)
             {
+                TempData["Deny"] = "I'm Sorry, since you did not create this ticket and it has not been assigned to you, you have no access to view it's details.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -98,6 +99,7 @@ namespace BugTracker.Controllers
             }
             else
             {
+                TempData["SubOnly"] = "I'm Sorry, You must be assigned the role of Submitter to create a ticket.";
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -126,6 +128,8 @@ namespace BugTracker.Controllers
                 }
                 else
                 {
+                    TempData["SubOnly"] = "I'm Sorry, You must be assigned the role of Submitter to create a ticket.";
+
                     return RedirectToAction("Index");
 
                 }
@@ -178,6 +182,9 @@ namespace BugTracker.Controllers
             }
             if (ticket.AssignedToUserId != userId || ticket.OwnerUserId != userId)
             {
+
+                TempData["OwnOnly"] = "I'm Sorry, You must be assigned to the ticket or the one who submitted it to make any changes.";
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -191,7 +198,7 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,ProjectId,TicketTypeId,TicketStatusId,TicketPriorityId,Progress,OwnerUserId,AssignedToUserId,AssignedToUserTwoId,Title,Description,Created,Updated")] Ticket ticket)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 //Get a reference to the Old Ticket
                 var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
@@ -245,6 +252,8 @@ namespace BugTracker.Controllers
             }
             if (ticket.AssignedToUserId != userId || ticket.OwnerUserId != userId)
             {
+                TempData["DelOnly"] = "I'm Sorry, You must be assigned to the ticket or the one who submitted it to delete it.";
+
                 return RedirectToAction("Index", "Home");
             }
 
