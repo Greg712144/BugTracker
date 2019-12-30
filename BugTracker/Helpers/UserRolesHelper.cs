@@ -45,5 +45,13 @@ namespace BugTracker.Helpers
             }
             return resultList;
         }
+
+        public ICollection<ApplicationUser> UsersNotInRole()
+        {
+            var unassigned = new List <ApplicationUser>();
+
+
+            return unassigned;
+        }
     }
 }

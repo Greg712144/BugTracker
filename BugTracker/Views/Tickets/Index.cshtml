@@ -6,8 +6,15 @@
     ViewBag.Title = "Index";
 
 }
+<style>
+    .urgentRed {
+        background-color: red;
+    }
 
-
+    .urgentBlue {
+        background-color: blue;
+    }
+</style>
 <div class="row">
     <div class="col-lg-12 grid-margin">
         <div class="card text-center">
@@ -83,8 +90,8 @@
 
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) 
-                                   
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+
                                     </td>
                                 </tr>
 
@@ -104,7 +111,7 @@
     <script src="~/Scripts/dataTables/jquery.dataTables.min.js"></script>
 
     <script src="~/Scripts/dataTables/dataTables.bootstrap4.min.js"></script>
-    
+
     <script>
         $('#tickTable').dataTable();
     </script>

@@ -562,6 +562,7 @@
     <Content Include="Views\Users\Edit2.cshtml" />
     <Content Include="Views\Tickets\subTickets.cshtml" />
     <Content Include="site.webmanifest" />
+    <Content Include="Views\Shared\_ComEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

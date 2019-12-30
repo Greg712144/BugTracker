@@ -24,7 +24,7 @@ namespace BugTracker.Helpers
 
                  try
                  {
-                var validExtensions = new List<string>();
+                        //var validExtensions = new List<string>();
                     foreach(var ext in WebConfigurationManager.AppSettings["validExtensions"].Split(','))
                     {
                     if (Path.GetExtension(file.FileName).Contains(ext))

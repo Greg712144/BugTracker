@@ -31,7 +31,7 @@ namespace BugTracker.Controllers
 
             return View(data);
         }
-
+        
         public ActionResult Login()
         {
      

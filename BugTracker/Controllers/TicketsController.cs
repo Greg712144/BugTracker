@@ -205,7 +205,7 @@ namespace BugTracker.Controllers
                 //Compare it to the incoming Ticket(ticket)
 
                 ticket.OwnerUserId = User.Identity.GetUserId();
-                ticket.Created = DateTime.Now;
+                ticket.Updated = DateTime.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
 
